@@ -7,8 +7,7 @@ import org.springframework.boot.context.properties.ConstructorBinding
 @ConfigurationProperties(prefix = "application")
 data class ApplicationProperties(
     val profile: Profile,
-    val credential: Credential,
-    val jasyptPassword: String
+    val credential: Credential
 ) {
     data class Profile(
         val name: String,

@@ -1,0 +1,20 @@
+logging:
+  level:
+    ROOT: DEBUG
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/onu
+    username: ENC(qiq7ere2wGxOhw59Xstfh6tMQ6JTgRboasA+r491QSo5/dr5t7ZLKBLaiYtYfaoF)
+    password: ENC(MtMAS+RMrq4ecES/tVpiDTbwKpqX92LEgO6/82+KOT1BkGlnOL0ZpVfNfnxfGGR5)
+
+application:
+  profile:
+    name: seonwoo
+    email: seonwoo960000@naver.com
+  credential:
+    password: hello_password_world
+jasypt:
+  encryptor:
+    password: hello

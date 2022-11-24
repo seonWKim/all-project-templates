@@ -6,7 +6,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/onu
-    username: ENC(49VWWsdDjLjxLOGMJQa8aA==)
+    username: root
     password:
 
 
@@ -16,9 +16,4 @@ application:
     email: seonwoo960000@naver.com
   credential:
     password: hello_password_world
-  jasypt_password: MDAwMDAwMDA6IDc4YmYgYTcxYiAxNzExIGY3NjUgZGYyOCBhMzJiIGY2NGUgODdlMiAgeC4uLi4uLmUuKC4rLk4uLgo=
-
-jasypt:
-  encryptor:
-    bean: jasyptEncryptor
 
