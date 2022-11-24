@@ -1,0 +1,19 @@
+POST http://127.0.0.1:8080/account
+Content-Type: application/json
+
+{
+  "username": "hello world",
+  "password": "password",
+  "authProvider": "GOOGLE",
+  "accountExpired": false,
+  "accountLocked": false,
+  "accountLockedAt": null,
+  "credentialExpired": false,
+  "enabled": true,
+  "name": null,
+  "description": "seonwoo description update",
+  "telEnc": "asgsdfsf",
+  "pictureUrl": "http://loclaho update",
+  "email": "seonwoo@naver.com",
+  "authority": "authority"
+}
