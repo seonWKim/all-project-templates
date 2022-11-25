@@ -1,5 +1,6 @@
 package com.example.springbootddd.domain
 
+import org.locationtech.jts.geom.Point
 import java.time.Instant
 import javax.persistence.*
 
@@ -32,10 +33,6 @@ open class Address {
     @Column(name = "last_update", nullable = false)
     open var lastUpdate: Instant? = null
 
-/*
-    TODO [JPA Buddy] create field to map the 'location' column
-     Available actions: Define target Java type | Uncomment as is | Remove column mapping
     @Column(name = "location", columnDefinition = "GEOMETRY(65535) not null")
-    open var location: Any? = null
-*/
+    open var location: Point? = null
 }
