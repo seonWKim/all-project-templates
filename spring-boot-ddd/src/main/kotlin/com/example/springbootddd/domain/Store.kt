@@ -1,5 +1,6 @@
 package com.example.springbootddd.domain
 
+import com.example.springbootddd.domain.address.Address
 import java.time.Instant
 import javax.persistence.*
 

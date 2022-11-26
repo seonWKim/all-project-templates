@@ -1,0 +1,2 @@
+### GET address
+GET http://localhost:8080/address/1
