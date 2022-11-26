@@ -1,10 +1,8 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.film
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.Instant
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "category")
@@ -18,4 +16,8 @@ open class Category {
 
     @Column(name = "last_update", nullable = false)
     open var lastUpdate: Instant? = null
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
+    @JsonIgnoreProperties("categories")
+    open var films: MutableList<Film> = mutableListOf()
 }

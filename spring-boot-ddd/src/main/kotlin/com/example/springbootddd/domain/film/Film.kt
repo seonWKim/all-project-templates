@@ -1,5 +1,6 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.film
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.math.BigDecimal
 import java.time.Instant
 import javax.persistence.*
@@ -21,11 +22,11 @@ open class Film {
     @Column(name = "release_year")
     open var releaseYear: Int? = null
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "language_id", nullable = false)
     open var language: Language? = null
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "original_language_id")
     open var originalLanguage: Language? = null
 
@@ -51,4 +52,42 @@ open class Film {
 
     @Column(name = "last_update", nullable = false)
     open var lastUpdate: Instant? = null
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "film_category",
+        joinColumns = [JoinColumn(name = "film_id", referencedColumnName = "film_id")], // owner side
+        inverseJoinColumns = [JoinColumn(name = "category_id", referencedColumnName = "category_id")] // non-owner side
+    )
+    @JsonIgnoreProperties("films")
+    open var categories: MutableSet<Category> = mutableSetOf()
+
+    @Entity
+    @Table(name = "language")
+    open class Language {
+        @Id
+        @Column(name = "language_id", columnDefinition = "TINYINT UNSIGNED not null")
+        open var id: Short? = null
+
+        @Column(name = "name", nullable = false, length = 20)
+        open var name: String? = null
+
+        @Column(name = "last_update", nullable = false)
+        open var lastUpdate: Instant? = null
+    }
+
+    @Entity
+    @Table(name = "film_text")
+    open class FilmText {
+        @Id
+        @Column(name = "film_id", nullable = false)
+        open var id: Short? = null
+
+        @Column(name = "title", nullable = false)
+        open var title: String? = null
+
+        @Lob
+        @Column(name = "description")
+        open var description: String? = null
+    }
 }

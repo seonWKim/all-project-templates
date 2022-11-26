@@ -1,5 +1,8 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.payment
 
+import com.example.springbootddd.domain.customer.Customer
+import com.example.springbootddd.domain.rental.Rental
+import com.example.springbootddd.domain.staff.Staff
 import java.math.BigDecimal
 import java.time.Instant
 import javax.persistence.*

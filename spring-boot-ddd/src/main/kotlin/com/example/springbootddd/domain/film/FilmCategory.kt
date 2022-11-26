@@ -1,4 +1,4 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.film
 
 import java.time.Instant
 import javax.persistence.*

@@ -1,6 +1,7 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.staff
 
 import com.example.springbootddd.domain.address.Address
+import com.example.springbootddd.domain.store.Store
 import java.time.Instant
 import javax.persistence.*
 

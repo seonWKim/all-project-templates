@@ -1,5 +1,7 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.inventory
 
+import com.example.springbootddd.domain.film.Film
+import com.example.springbootddd.domain.store.Store
 import java.time.Instant
 import javax.persistence.*
 

@@ -1,4 +1,4 @@
-package com.example.springbootddd.domain
+package com.example.springbootddd.domain.film
 
 import org.hibernate.Hibernate
 import java.io.Serializable
@@ -7,25 +7,25 @@ import javax.persistence.Column
 import javax.persistence.Embeddable
 
 @Embeddable
-open class FilmActorId : Serializable {
-    @Column(name = "actor_id", columnDefinition = "SMALLINT UNSIGNED not null")
-    open var actorId: Int? = null
-
+open class FilmCategoryId : Serializable {
     @Column(name = "film_id", columnDefinition = "SMALLINT UNSIGNED not null")
     open var filmId: Int? = null
 
-    override fun hashCode(): Int = Objects.hash(actorId, filmId)
+    @Column(name = "category_id", columnDefinition = "TINYINT UNSIGNED not null")
+    open var categoryId: Short? = null
+
+    override fun hashCode(): Int = Objects.hash(filmId, categoryId)
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || Hibernate.getClass(this) != Hibernate.getClass(other)) return false
 
-        other as FilmActorId
+        other as FilmCategoryId
 
-        return actorId == other.actorId &&
-                filmId == other.filmId
+        return filmId == other.filmId &&
+                categoryId == other.categoryId
     }
 
     companion object {
-        private const val serialVersionUID = -5979223520575968494L
+        private const val serialVersionUID = 2189030900042729598L
     }
 }
