@@ -10,12 +10,12 @@ open class FilmActor {
     open var id: FilmActorId? = null
 
     @MapsId("actorId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "actor_id", nullable = false)
     open var actor: Actor? = null
 
     @MapsId("filmId")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "film_id", nullable = false)
     open var film: Film? = null
 

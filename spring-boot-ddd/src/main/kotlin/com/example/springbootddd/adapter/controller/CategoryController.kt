@@ -1,6 +1,7 @@
 package com.example.springbootddd.adapter.controller
 
 import com.example.springbootddd.application.dto.CategoryDto
+import com.example.springbootddd.application.dto.FilmCategoryDto
 import com.example.springbootddd.application.service.CategoryService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class CategoryController(val categoryService: CategoryService) {
 
     @GetMapping("/{name}")
-    fun findByName(@PathVariable name: String): CategoryDto {
+    fun findByName(@PathVariable name: String): List<FilmCategoryDto> {
         return categoryService.findByName(name)
     }
 }

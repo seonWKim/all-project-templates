@@ -17,7 +17,6 @@ open class Category {
     @Column(name = "last_update", nullable = false)
     open var lastUpdate: Instant? = null
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "categories")
-    @JsonIgnoreProperties("categories")
-    open var films: MutableList<Film> = mutableListOf()
+    @OneToMany(mappedBy = "category")
+    open var filmCategories: MutableSet<FilmCategory> = mutableSetOf()
 }

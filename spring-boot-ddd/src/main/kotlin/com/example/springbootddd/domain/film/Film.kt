@@ -1,6 +1,6 @@
 package com.example.springbootddd.domain.film
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.example.springbootddd.domain.film.FilmCategory
 import java.math.BigDecimal
 import java.time.Instant
 import javax.persistence.*
@@ -53,14 +53,8 @@ open class Film {
     @Column(name = "last_update", nullable = false)
     open var lastUpdate: Instant? = null
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "film_category",
-        joinColumns = [JoinColumn(name = "film_id", referencedColumnName = "film_id")], // owner side
-        inverseJoinColumns = [JoinColumn(name = "category_id", referencedColumnName = "category_id")] // non-owner side
-    )
-    @JsonIgnoreProperties("films")
-    open var categories: MutableSet<Category> = mutableSetOf()
+    @OneToMany(mappedBy = "film")
+    open var filmCategories: MutableSet<FilmCategory> = mutableSetOf()
 
     @Entity
     @Table(name = "language")
