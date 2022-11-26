@@ -5,3 +5,4 @@
      sudo amazon-linux-extras install java-openjdk11
      sudo yum install git
   ```
+- Edit inbound rules to allow traffic 
