@@ -1,5 +1,6 @@
 package com.example.springbootddd.application.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.io.Serializable
 import java.math.BigDecimal
 import java.time.Instant
@@ -18,11 +19,6 @@ data class FilmDto(
     var rating: String? = null,
     var specialFeatures: String? = null,
     var lastUpdate: Instant? = null,
+    @JsonIgnoreProperties("films")
     var categories: MutableSet<CategoryDto> = mutableSetOf()
-) : Serializable {
-    data class CategoryDto(
-        var id: Short? = null,
-        var name: String? = null,
-        var lastUpdate: Instant? = null,
-    ) : Serializable
-}
+) : Serializable

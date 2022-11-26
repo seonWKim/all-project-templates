@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 class CategoryController(val categoryService: CategoryService) {
 
     @GetMapping("/{name}")
-    fun findByName(@PathVariable name: String): List<FilmCategoryDto> {
+    fun findByName(@PathVariable name: String): CategoryDto? {
         return categoryService.findByName(name)
     }
 }
