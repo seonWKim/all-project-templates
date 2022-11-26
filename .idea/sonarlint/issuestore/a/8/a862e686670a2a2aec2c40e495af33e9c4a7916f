@@ -1,0 +1,11 @@
+
+P
+java:S1118":Add a private constructor to hide the implicit public one.(„ÏÄ÷
+s
+java:S1104"XMake objectMapper a static final constant or non-public and provide accessors if needed.(’ÄÈíüÿÿÿÿ
+|
+java:S1104"aMake snakeCaseObjectMapper a static final constant or non-public and provide accessors if needed.(Ë’Õüÿÿÿÿ
+M
+java:S1444"2Make this "public static objectMapper" field final(’ÄÈíüÿÿÿÿ
+V
+java:S1444";Make this "public static snakeCaseObjectMapper" field final(Ë’Õüÿÿÿÿ
