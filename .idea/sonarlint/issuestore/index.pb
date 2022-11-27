@@ -13,23 +13,3 @@ _spring-boot-java-blocking/src/test/java/com/example/personalprojecttemplate/uti
 uspring-boot-kotlin-non-blocking/src/main/kotlin/com/example/projecttemplatekotlin/ProjectTemplateKotlinApplication.kt,e/a/ea9379ca151599a03877a0920891d3cbaa986f07
 ™
 zspring-boot-kotlin-non-blocking/src/test/kotlin/com/example/projecttemplatekotlin/ProjectTemplateKotlinApplicationTests.kt,1/7/17971c5810b86d043a3e23aee0bb78867771f44b
-¨
-|spring-boot-kotlin-blocking/src/test/kotlin/com/example/springbootkotlinblocking/SpringBootKotlinBlockingApplicationTests.kt,5/f/5f58158898cf139a8404ef94790747bac7b5ad61
-n
->spring-boot-kotlin-blocking/src/main/resources/application.yml,f/1/f13afa6d4c2de43b8d386b81658bb375fe3debdc
-9
-	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
-S
-#jasypt-version-3-encryption/pom.xml,b/3/b3b354f8537fd61a6efe503854dfa9ae523a6d08
-Q
-!spring-boot-java-blocking/pom.xml,3/e/3e03df4042df35938ac9ec950011f7f40d9fe962
-\
-,spring-boot-kotlin-blocking/build.gradle.kts,0/1/01b29d30cbbd28adae72ba19e3d85d0e598737f1
-ß
-wjasypt-version-3-encryption/src/main/java/com/example/jasyptversion3encryption/JasyptVersion3EncryptionApplication.java,d/2/d29a93dd80b251573dc7f7c9c3224abf0141b6b6
-è
-_spring-boot-kotlin-encryption/src/main/resources/config/application-jasypt-before-version-3.yml,3/b/3b0444b6ee9e53c185487fa8dd7cb320364acf49
-w
-Gspring-boot-kotlin-encryption/src/main/resources/config/application.yml,3/e/3e54003e85339c99a715affb14bea5e9432093de
-I
-spring-boot-ddd/README.md,8/e/8eb8449a23d5132499d9a5a259d51b511be5a790
