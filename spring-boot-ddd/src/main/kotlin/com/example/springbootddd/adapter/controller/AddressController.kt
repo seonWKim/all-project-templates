@@ -14,7 +14,7 @@ class AddressController(
 ) {
 
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long): AddressDto {
+    fun findById(@PathVariable id: Int): AddressDto {
         return addressService.findById(id)
     }
 }

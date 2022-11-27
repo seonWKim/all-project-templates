@@ -11,7 +11,7 @@ class AddressService(
     private val addressMapper: AddressMapper
 ) {
 
-    fun findById(id: Long): AddressDto {
+    fun findById(id: Int): AddressDto {
         return addressMapper.addressToAddressDto(addressRepository.getFullAddress(id))
     }
 }
