@@ -12,6 +12,13 @@ class PaymentService(
     val mapper: PaymentMapper
 ) {
 
+    @Transactional(readOnly = true)
+    fun findById(id: Int): PaymentDto {
+        return mapper.paymentToPaymentDto(
+            paymentRepository.findByIdFetchJoin(id)
+        )
+    }
+
     @Transactional
     fun save(paymentDto: PaymentDto): PaymentDto {
         return mapper.paymentToPaymentDto(
