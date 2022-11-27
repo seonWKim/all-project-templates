@@ -1,8 +1,11 @@
 package com.example.springbootddd.domain.payment;
 
+import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.stereotype.Repository
 
+@Repository
 interface PaymentRepository : JpaRepository<Payment, Int> {
     @Query(
         """
@@ -15,4 +18,6 @@ interface PaymentRepository : JpaRepository<Payment, Int> {
         """
     )
     fun findByIdFetchJoin(id: Int): Payment
+
+    fun findByCustomerId(id: Int, pageable: Pageable): List<PaymentInfo>
 }

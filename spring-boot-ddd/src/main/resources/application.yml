@@ -1,7 +1,11 @@
 logging:
   level:
-    org.springframework:
-      web: DEBUG
+    org:
+      springframework:
+        web: DEBUG
+      hibernate:
+        SQL: DEBUG
+        type.descriptor.sql.BasicBinder: TRACE
 
 spring:
   datasource:

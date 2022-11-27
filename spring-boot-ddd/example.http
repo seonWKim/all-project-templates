@@ -7,6 +7,9 @@ GET http://localhost:8080/category/Action
 ### Get payment
 GET http://localhost:8080/payment/16051
 
+### Get payments (paging)
+GET http://localhost:8080/payment?page=5&size=10
+
 ### Save payment
 POST http://localhost:8080/payment
 Content-Type: application/json
