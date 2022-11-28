@@ -6,6 +6,7 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.spring") version "1.6.21"
     kotlin("plugin.jpa") version "1.6.21"
+    kotlin("kapt") version "1.5.10"
 }
 
 group = "com.example"
@@ -23,6 +24,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.mapstruct:mapstruct:1.5.3.Final")
+    kapt("org.mapstruct:mapstruct-processor:1.5.3.Final")
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.batch:spring-batch-test")
@@ -37,4 +40,14 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+kapt {
+    arguments {
+        // Set Mapstruct Configuration options here
+        // https://kotlinlang.org/docs/reference/kapt.html#annotation-processor-arguments
+        // https://mapstruct.org/documentation/stable/reference/html/#configuration-options
+        // arg("mapstruct.defaultComponentModel", "spring")
+    }
+    correctErrorTypes = true
 }

@@ -6,6 +6,7 @@ import com.example.springbatchkotlin.utils.Slf4j.Companion.log
 import org.springframework.batch.core.JobParametersBuilder
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
@@ -14,7 +15,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @RestController
-@RequestMapping("/jobx")
+@RequestMapping("/jobs")
 class JobController(
     private val jobService: JobService
 ) {
@@ -25,7 +26,7 @@ class JobController(
     @GetMapping("/{jobName}")
     fun findJob(@PathVariable("jobName") jobName: String) = jobService.findJob(jobName)
 
-    @GetMapping("/{jobName}/start")
+    @PostMapping("/{jobName}/start")
     fun startJob(@PathVariable("jobName") jobName: String, request: WebRequest): JobExecutionResponse {
         // 동일한 job parameter 구성으로 이미 complete한 job execution이 있으면 동일한 job parameter 구성으로는 중복 실행 못함.
         // 임의 query parameter를 추가해 주면 실행 가능.
@@ -49,6 +50,6 @@ class JobController(
         return jobService.startJob(jobName, builder.toJobParameters())
     }
 
-    @GetMapping("{jobName}/stop")
+    @PostMapping("{jobName}/stop")
     fun stopJob(@PathVariable("jobName") jobName: String) = jobService.stopJob(jobName)
 }

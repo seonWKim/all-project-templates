@@ -27,3 +27,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      # don't use ALWAYS. create batch meta tables manually with schema-mysql.sql
+      initialize-schema: NEVER
