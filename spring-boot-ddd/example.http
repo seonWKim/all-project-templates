@@ -1,0 +1,25 @@
+### GET address
+GET http://localhost:8080/address/1
+
+### Get category
+GET http://localhost:8080/category/Action
+
+### Get payment
+GET http://localhost:8080/payment/16051
+
+### Get payments (paging)
+GET http://localhost:8080/payment?page=5&size=10
+
+### Save payment
+POST http://localhost:8080/payment
+Content-Type: application/json
+
+{
+  "id": null,
+  "customerId": 1,
+  "staffId": 1,
+  "rentalId": null,
+  "amount": 5.00,
+  "paymentDate": "2022-05-28T10:35:23Z",
+  "lastUpdate": "2022-05-28T10:35:23Z"
+}

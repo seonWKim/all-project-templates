@@ -1,0 +1,383 @@
+2022-11-28 00:07:58 ERROR [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 4
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 4
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:07:58 ERROR [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 4
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 4
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:08:27 ERROR [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 5
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 5
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:08:27 ERROR [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 5
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.joran.action.ShutdownHookAction - Missing class name for shutdown hook. Near [shutdownHook] line 5
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:08:53 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - Starting SpringBootDddApplicationKt using Java 11.0.14 on AL01983658.local with PID 51593 (/Users/user/Desktop/project-templates/spring-boot-ddd/build/classes/kotlin/main started by user in /Users/user/Desktop/project-templates/spring-boot-ddd)
+2022-11-28 00:08:53 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - No active profile set, falling back to 1 default profile: "default"
+2022-11-28 00:08:54 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:08:54 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:08:54 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 53 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:08:54 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 53 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:08:54 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:08:54 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:08:54 INFO [org.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:08:54 INFO [org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2022-11-28 00:08:54 INFO [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-28 00:08:54 INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2022-11-28 00:08:54 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 861 ms
+2022-11-28 00:08:54 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 861 ms
+2022-11-28 00:08:54 INFO [org.hibernate.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-28 00:08:54 INFO [org.hibernate.Version] - HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-28 00:08:54 INFO [org.hibernate.spatial.integration.SpatialService] - HHH80000001: hibernate-spatial integration enabled : true
+2022-11-28 00:08:54 INFO [org.hibernate.annotations.common.Version] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-28 00:08:54 INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2022-11-28 00:08:55 INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2022-11-28 00:08:55 INFO [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+2022-11-28 00:08:55 INFO [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
+2022-11-28 00:08:55 INFO [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-28 00:08:55 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:08:55 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:08:56 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:08:56 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver] - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:08:56 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver] - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:08:56 INFO [org.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:08:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:08:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:08:56 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - Started SpringBootDddApplicationKt in 3.089 seconds (JVM running for 3.484)
+2022-11-28 00:09:55 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - Starting SpringBootDddApplicationKt using Java 11.0.14 on AL01983658.local with PID 53534 (/Users/user/Desktop/project-templates/spring-boot-ddd/build/classes/kotlin/main started by user in /Users/user/Desktop/project-templates/spring-boot-ddd)
+2022-11-28 00:09:55 DEBUG [com.example.springbootddd.SpringBootDddApplicationKt] - Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-28 00:09:55 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - No active profile set, falling back to 1 default profile: "default"
+2022-11-28 00:09:55 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:09:55 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:09:55 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 79 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:09:55 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] - Finished Spring Data repository scanning in 79 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:09:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:09:56 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:09:56 INFO [org.apache.coyote.http11.Http11NioProtocol] - Initializing ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:09:56 INFO [org.apache.catalina.core.StandardService] - Starting service [Tomcat]
+2022-11-28 00:09:56 INFO [org.apache.catalina.core.StandardEngine] - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-28 00:09:56 INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] - Initializing Spring embedded WebApplicationContext
+2022-11-28 00:09:56 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 1268 ms
+2022-11-28 00:09:56 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] - Root WebApplicationContext: initialization completed in 1268 ms
+2022-11-28 00:09:56 INFO [org.hibernate.jpa.internal.util.LogHelper] - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-28 00:09:56 INFO [org.hibernate.Version] - HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-28 00:09:56 INFO [org.hibernate.spatial.integration.SpatialService] - HHH80000001: hibernate-spatial integration enabled : true
+2022-11-28 00:09:56 INFO [org.hibernate.annotations.common.Version] - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-28 00:09:56 INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Starting...
+2022-11-28 00:09:57 INFO [com.zaxxer.hikari.HikariDataSource] - HikariPool-1 - Start completed.
+2022-11-28 00:09:57 INFO [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+2022-11-28 00:09:57 INFO [org.hibernate.dialect.Dialect] - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
+2022-11-28 00:09:57 INFO [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-28 00:09:57 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:09:57 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:09:58 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:09:58 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping] - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping] - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver] - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:09:58 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver] - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:09:58 INFO [org.apache.coyote.http11.Http11NioProtocol] - Starting ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:09:58 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:09:58 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:09:58 INFO [com.example.springbootddd.SpringBootDddApplicationKt] - Started SpringBootDddApplicationKt in 3.757 seconds (JVM running for 4.331)
+2022-11-28 00:10:28 INFO [com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Starting SpringBootDddApplicationKt using Java 11.0.14 on AL01983658.local with PID 54455 (/Users/user/Desktop/project-templates/spring-boot-ddd/build/classes/kotlin/main started by user in /Users/user/Desktop/project-templates/spring-boot-ddd)
+2022-11-28 00:10:28 DEBUG [com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-28 00:10:28 INFO [com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - No active profile set, falling back to 1 default profile: "default"
+2022-11-28 00:10:29 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:10:29 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:10:29 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Finished Spring Data repository scanning in 42 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:10:29 INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Finished Spring Data repository scanning in 42 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:10:29 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:10:29 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:10:29 INFO [org.apache.coyote.http11.Http11NioProtocol]{cyan} - Initializing ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:10:29 INFO [org.apache.catalina.core.StandardService]{cyan} - Starting service [Tomcat]
+2022-11-28 00:10:29 INFO [org.apache.catalina.core.StandardEngine]{cyan} - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-28 00:10:29 INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]]{cyan} - Initializing Spring embedded WebApplicationContext
+2022-11-28 00:10:29 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{cyan} - Root WebApplicationContext: initialization completed in 817 ms
+2022-11-28 00:10:29 INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{cyan} - Root WebApplicationContext: initialization completed in 817 ms
+2022-11-28 00:10:29 INFO [org.hibernate.jpa.internal.util.LogHelper]{cyan} - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-28 00:10:29 INFO [org.hibernate.Version]{cyan} - HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-28 00:10:29 INFO [org.hibernate.spatial.integration.SpatialService]{cyan} - HHH80000001: hibernate-spatial integration enabled : true
+2022-11-28 00:10:29 INFO [org.hibernate.annotations.common.Version]{cyan} - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-28 00:10:29 INFO [com.zaxxer.hikari.HikariDataSource]{cyan} - HikariPool-1 - Starting...
+2022-11-28 00:10:30 INFO [com.zaxxer.hikari.HikariDataSource]{cyan} - HikariPool-1 - Start completed.
+2022-11-28 00:10:30 INFO [org.hibernate.dialect.Dialect]{cyan} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+2022-11-28 00:10:30 INFO [org.hibernate.dialect.Dialect]{cyan} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
+2022-11-28 00:10:30 INFO [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator]{cyan} - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-28 00:10:30 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{cyan} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:10:30 INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{cyan} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:10:30 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{cyan} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:10:30 WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{cyan} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{cyan} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{cyan} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{cyan} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{cyan} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{cyan} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{cyan} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{cyan} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:10:31 DEBUG [org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{cyan} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:10:31 INFO [org.apache.coyote.http11.Http11NioProtocol]{cyan} - Starting ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:10:31 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:10:31 INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:10:31 INFO [com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Started SpringBootDddApplicationKt in 2.732 seconds (JVM running for 3.142)
+2022-11-28 00:11:12 %PARSER_ERROR[clr] [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - There is no conversion class registered for composite conversion word [clr]
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - Failed to create converter for [%clr] keyword
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - There is no conversion class registered for composite conversion word [clr]
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - Failed to create converter for [%clr] keyword
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:11:12 %PARSER_ERROR[clr] [org.springframework.boot.SpringApplication] - Application run failed
+java.lang.IllegalStateException: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - There is no conversion class registered for composite conversion word [clr]
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - Failed to create converter for [%clr] keyword
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:344)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initialize(LoggingApplicationListener.java:298)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEnvironmentPreparedEvent(LoggingApplicationListener.java:246)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.onApplicationEvent(LoggingApplicationListener.java:223)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.doInvokeListener(SimpleApplicationEventMulticaster.java:176)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.invokeListener(SimpleApplicationEventMulticaster.java:169)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:143)
+	at org.springframework.context.event.SimpleApplicationEventMulticaster.multicastEvent(SimpleApplicationEventMulticaster.java:131)
+	at org.springframework.boot.context.event.EventPublishingRunListener.environmentPrepared(EventPublishingRunListener.java:85)
+	at org.springframework.boot.SpringApplicationRunListeners.lambda$environmentPrepared$2(SpringApplicationRunListeners.java:66)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1541)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:120)
+	at org.springframework.boot.SpringApplicationRunListeners.doWithListeners(SpringApplicationRunListeners.java:114)
+	at org.springframework.boot.SpringApplicationRunListeners.environmentPrepared(SpringApplicationRunListeners.java:65)
+	at org.springframework.boot.SpringApplication.prepareEnvironment(SpringApplication.java:344)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:302)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295)
+	at com.example.springbootddd.SpringBootDddApplicationKt.main(SpringBootDddApplication.kt:13)
+Caused by: java.lang.IllegalStateException: Logback configuration error detected: 
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - There is no conversion class registered for composite conversion word [clr]
+ERROR in ch.qos.logback.core.pattern.parser.Compiler@b672aa8 - Failed to create converter for [%clr] keyword
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.loadConfiguration(LogbackLoggingSystem.java:179)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initializeWithConventions(AbstractLoggingSystem.java:80)
+	at org.springframework.boot.logging.AbstractLoggingSystem.initialize(AbstractLoggingSystem.java:60)
+	at org.springframework.boot.logging.logback.LogbackLoggingSystem.initialize(LogbackLoggingSystem.java:132)
+	at org.springframework.boot.context.logging.LoggingApplicationListener.initializeSystem(LoggingApplicationListener.java:329)
+	... 18 common frames omitted
+2022-11-28 00:12:55 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Starting SpringBootDddApplicationKt using Java 11.0.14 on AL01983658.local with PID 56850 (/Users/user/Desktop/project-templates/spring-boot-ddd/build/classes/kotlin/main started by user in /Users/user/Desktop/project-templates/spring-boot-ddd)
+2022-11-28 00:12:55 DEBUG [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-28 00:12:55 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - No active profile set, falling back to 1 default profile: "default"
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Finished Spring Data repository scanning in 40 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{cyan} - Finished Spring Data repository scanning in 40 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:12:56 INFO [32m[0;39m[org.apache.coyote.http11.Http11NioProtocol]{cyan} - Initializing ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:12:56 INFO [32m[0;39m[org.apache.catalina.core.StandardService]{cyan} - Starting service [Tomcat]
+2022-11-28 00:12:56 INFO [32m[0;39m[org.apache.catalina.core.StandardEngine]{cyan} - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-28 00:12:56 INFO [32m[0;39m[org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]]{cyan} - Initializing Spring embedded WebApplicationContext
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{cyan} - Root WebApplicationContext: initialization completed in 945 ms
+2022-11-28 00:12:56 INFO [32m[0;39m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{cyan} - Root WebApplicationContext: initialization completed in 945 ms
+2022-11-28 00:12:56 INFO [32m[0;39m[org.hibernate.jpa.internal.util.LogHelper]{cyan} - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-28 00:12:56 INFO [32m[0;39m[org.hibernate.Version]{cyan} - HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-28 00:12:57 INFO [32m[0;39m[org.hibernate.spatial.integration.SpatialService]{cyan} - HHH80000001: hibernate-spatial integration enabled : true
+2022-11-28 00:12:57 INFO [32m[0;39m[org.hibernate.annotations.common.Version]{cyan} - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-28 00:12:57 INFO [32m[0;39m[com.zaxxer.hikari.HikariDataSource]{cyan} - HikariPool-1 - Starting...
+2022-11-28 00:12:57 INFO [32m[0;39m[com.zaxxer.hikari.HikariDataSource]{cyan} - HikariPool-1 - Start completed.
+2022-11-28 00:12:57 INFO [32m[0;39m[org.hibernate.dialect.Dialect]{cyan} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+2022-11-28 00:12:57 INFO [32m[0;39m[org.hibernate.dialect.Dialect]{cyan} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
+2022-11-28 00:12:57 INFO [32m[0;39m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator]{cyan} - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-28 00:12:57 INFO [32m[0;39m[org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{cyan} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:12:57 INFO [32m[0;39m[org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{cyan} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:12:58 WARN [33m[0;39m[org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{cyan} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:12:58 WARN [33m[0;39m[org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{cyan} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{cyan} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{cyan} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{cyan} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{cyan} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{cyan} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{cyan} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{cyan} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:12:58 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{cyan} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:12:58 INFO [32m[0;39m[org.apache.coyote.http11.Http11NioProtocol]{cyan} - Starting ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:12:58 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:12:58 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{cyan} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:12:58 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{cyan} - Started SpringBootDddApplicationKt in 3.122 seconds (JVM running for 3.516)
+2022-11-28 00:13:04 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{red} - Starting SpringBootDddApplicationKt using Java 11.0.14 on AL01983658.local with PID 56900 (/Users/user/Desktop/project-templates/spring-boot-ddd/build/classes/kotlin/main started by user in /Users/user/Desktop/project-templates/spring-boot-ddd)
+2022-11-28 00:13:04 DEBUG [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{red} - Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-11-28 00:13:04 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{red} - No active profile set, falling back to 1 default profile: "default"
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{red} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{red} - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{red} - Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.data.repository.config.RepositoryConfigurationDelegate]{red} - Finished Spring Data repository scanning in 50 ms. Found 4 JPA repository interfaces.
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{red} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{red} - Tomcat initialized with port(s): 8080 (http)
+2022-11-28 00:13:05 INFO [32m[0;39m[org.apache.coyote.http11.Http11NioProtocol]{red} - Initializing ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:13:05 INFO [32m[0;39m[org.apache.catalina.core.StandardService]{red} - Starting service [Tomcat]
+2022-11-28 00:13:05 INFO [32m[0;39m[org.apache.catalina.core.StandardEngine]{red} - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2022-11-28 00:13:05 INFO [32m[0;39m[org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]]{red} - Initializing Spring embedded WebApplicationContext
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{red} - Root WebApplicationContext: initialization completed in 1041 ms
+2022-11-28 00:13:05 INFO [32m[0;39m[org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext]{red} - Root WebApplicationContext: initialization completed in 1041 ms
+2022-11-28 00:13:05 INFO [32m[0;39m[org.hibernate.jpa.internal.util.LogHelper]{red} - HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-28 00:13:05 INFO [32m[0;39m[org.hibernate.Version]{red} - HHH000412: Hibernate ORM core version 5.6.12.Final
+2022-11-28 00:13:05 INFO [32m[0;39m[org.hibernate.spatial.integration.SpatialService]{red} - HHH80000001: hibernate-spatial integration enabled : true
+2022-11-28 00:13:06 INFO [32m[0;39m[org.hibernate.annotations.common.Version]{red} - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-28 00:13:06 INFO [32m[0;39m[com.zaxxer.hikari.HikariDataSource]{red} - HikariPool-1 - Starting...
+2022-11-28 00:13:06 INFO [32m[0;39m[com.zaxxer.hikari.HikariDataSource]{red} - HikariPool-1 - Start completed.
+2022-11-28 00:13:06 INFO [32m[0;39m[org.hibernate.dialect.Dialect]{red} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQL8SpatialDialect
+2022-11-28 00:13:06 INFO [32m[0;39m[org.hibernate.dialect.Dialect]{red} - HHH000400: Using dialect: org.hibernate.spatial.dialect.mysql.MySQLSpatialDialect
+2022-11-28 00:13:06 INFO [32m[0;39m[org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator]{red} - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-28 00:13:06 INFO [32m[0;39m[org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{red} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:13:06 INFO [32m[0;39m[org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean]{red} - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-28 00:13:07 WARN [33m[0;39m[org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{red} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:13:07 WARN [33m[0;39m[org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration]{red} - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{red} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter]{red} - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{red} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping]{red} - 7 mappings in 'requestMappingHandlerMapping'
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{red} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.handler.SimpleUrlHandlerMapping]{red} - Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{red} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:13:07 DEBUG [32m[0;39m[org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver]{red} - ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2022-11-28 00:13:07 INFO [32m[0;39m[org.apache.coyote.http11.Http11NioProtocol]{red} - Starting ProtocolHandler ["http-nio-8080"]
+2022-11-28 00:13:07 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{red} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:13:07 INFO [32m[0;39m[org.springframework.boot.web.embedded.tomcat.TomcatWebServer]{red} - Tomcat started on port(s): 8080 (http) with context path ''
+2022-11-28 00:13:07 INFO [32m[0;39m[com.example.springbootddd.SpringBootDddApplicationKt]{red} - Started SpringBootDddApplicationKt in 3.644 seconds (JVM running for 4.138)
