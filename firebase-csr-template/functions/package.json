@@ -1,0 +1,23 @@
+{
+  "name": "functions",
+  "description": "Cloud Functions for your project",
+  "scripts": {
+    "build": "tsc",
+    "dev": "npm run serve",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "deploy": "npm run deploy:dev && npm run deploy:prod",
+    "deploy:dev": "firebase use dev && firebase deploy --only functions",
+    "deploy:prod": "firebase use prod && firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^13.5.0",
+    "firebase-functions": "^6.4.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "private": true
+}
