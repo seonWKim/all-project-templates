@@ -278,6 +278,17 @@ NEXT_FIREBASE_MESSAGING_VAPID=$PROD_VAPID_KEY
 EOF
     print_success ".env.production created"
 
+    # Clean up example files
+    print_info "Cleaning up example files..."
+    if [ -f ".env.development.example" ]; then
+        rm .env.development.example
+        print_success "Removed .env.development.example"
+    fi
+    if [ -f ".env.production.example" ]; then
+        rm .env.production.example
+        print_success "Removed .env.production.example"
+    fi
+
     # Update app metadata in layout.tsx
     print_info "Updating app metadata in layout.tsx..."
     if [ -f "src/app/layout.tsx" ]; then

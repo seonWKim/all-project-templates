@@ -2,8 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/lboa-online-billing-gatling-test" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/personal-project-template" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/project-template-kotlin" vcs="Git" />
   </component>
 </project>
