@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "firebase-ssr-template-dev",
+    "dev": "firebase-ssr-template-dev",
+    "prod": "firebase-ssr-template-prod"
+  }
+}

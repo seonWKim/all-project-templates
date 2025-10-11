@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to check if user is owner
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+
+    // Add your custom collection rules here
+    // Example:
+    // match /posts/{postId} {
+    //   allow read: if true;
+    //   allow create: if isAuthenticated();
+    //   allow update, delete: if isOwner(resource.data.userId);
+    // }
+  }
+}
