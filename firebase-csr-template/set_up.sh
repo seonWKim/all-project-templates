@@ -90,6 +90,12 @@ main() {
 EOF
     echo -e "${NC}"
 
+    # Check for command line arguments
+    if [ $# -gt 0 ]; then
+        PROJECT_ID_ARG="$1"
+        print_info "Using provided project ID: $PROJECT_ID_ARG"
+    fi
+
     check_dependencies
 
     # Step 1: Project Configuration
@@ -98,8 +104,16 @@ EOF
     PROJECT_NAME=$(prompt_with_default "Enter your project name" "my-awesome-project")
     print_info "Project name: $PROJECT_NAME"
 
-    DEV_PROJECT_ID=$(prompt_with_default "Enter Firebase DEV project ID" "${PROJECT_NAME}-dev")
-    PROD_PROJECT_ID=$(prompt_with_default "Enter Firebase PROD project ID" "${PROJECT_NAME}-prod")
+    # Use provided project ID as base or ask for input
+    if [ -n "$PROJECT_ID_ARG" ]; then
+        BASE_PROJECT_ID="$PROJECT_ID_ARG"
+        print_info "Using base project ID: $BASE_PROJECT_ID"
+        DEV_PROJECT_ID=$(prompt_with_default "Enter Firebase DEV project ID" "${BASE_PROJECT_ID}-dev")
+        PROD_PROJECT_ID=$(prompt_with_default "Enter Firebase PROD project ID" "${BASE_PROJECT_ID}-prod")
+    else
+        DEV_PROJECT_ID=$(prompt_with_default "Enter Firebase DEV project ID" "${PROJECT_NAME}-dev")
+        PROD_PROJECT_ID=$(prompt_with_default "Enter Firebase PROD project ID" "${PROJECT_NAME}-prod")
+    fi
 
     print_success "Project configuration set"
 
@@ -370,5 +384,28 @@ EOF
     print_success "Happy coding! 🚀"
 }
 
-# Run main function
-main
+# Show usage information
+show_usage() {
+    echo "Usage: $0 [PROJECT_ID]"
+    echo ""
+    echo "Arguments:"
+    echo "  PROJECT_ID    Optional base project ID to use for dev/prod environments"
+    echo ""
+    echo "Examples:"
+    echo "  $0                           # Interactive setup"
+    echo "  $0 my-project-abc123         # Use my-project-abc123 as base ID"
+    echo ""
+    echo "If PROJECT_ID is provided, it will be used as the base for:"
+    echo "  - Dev environment: PROJECT_ID-dev"
+    echo "  - Prod environment: PROJECT_ID-prod"
+    echo ""
+}
+
+# Check for help flag
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_usage
+    exit 0
+fi
+
+# Run main function with all arguments
+main "$@"
