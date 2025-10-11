@@ -22,100 +22,119 @@ By completing this project, you will gain practical experience in:
 
 The database system consists of four main components:
 
-1. **Storage Engine**: Core data structures, B+ trees, page management, file I/O
-2. **Query Parser**: SQL lexer/parser, abstract syntax trees, query planning
-3. **Server**: Network protocol, connection handling, command processing
-4. **Client**: Command-line interface, protocol implementation
+1. **Client Interface**: Command-line interface, protocol implementation
+2. **Server**: Network protocol, connection handling, command processing  
+3. **Query Parser**: SQL lexer/parser, abstract syntax trees, query planning
+4. **Storage Engine**: Core data structures, B+ trees, page management, file I/O
 
 ## Implementation Phases
 
-### Phase 1: Storage Engine Foundation (Weeks 1-4)
+### Phase 1: Client Interface Foundation (Weeks 1-2)
 
-**Objective**: Build the core storage layer that manages data persistence and retrieval.
+**Objective**: Build the user-facing interface that makes testing and development easier.
 
-#### Week 1-2: Basic Storage Structures
+#### Week 1-2: Command-Line Client with Mock Backend
 
-- **Goals**: Understand file-based data storage and page management
+- **Goals**: Create testable interface and understand protocol design
 - **Deliverables**:
-    - Page-based file I/O system (4KB pages)
-    - Basic record storage and retrieval
-    - Simple heap file organization
-- **Key Concepts**: Operating system file I/O, memory mapping, page structures
-- **Testing**: File I/O tests with standardized data formats
+    - Interactive SQL shell with command history and auto-completion
+    - Mock database backend with hardcoded responses
+    - Basic protocol specification (JSON over TCP for simplicity)
+    - Result formatting and display with table output
+- **Key Concepts**: User interface design, command parsing, network protocols
+- **Testing**: CLI functionality tests with automated input/output verification
+- **Benefits**: Students can immediately see results and test framework can easily validate outputs
 
-#### Week 3-4: Indexing with B+ Trees
+### Phase 2: Server Implementation (Weeks 3-6)
 
-- **Goals**: Implement efficient data access through indexing
+**Objective**: Build a networked database server that the client can connect to.
+
+#### Week 3-4: Basic Server and Protocol
+
+- **Goals**: Establish client-server communication 
 - **Deliverables**:
-    - B+ tree implementation for integer keys
-    - Insert, delete, and search operations
-    - Tree balancing and split/merge operations
-- **Key Concepts**: Tree algorithms, disk-based data structures, performance analysis
-- **Testing**: Index correctness tests with predefined datasets
+    - TCP server accepting client connections
+    - JSON-based protocol implementation (easier to debug than binary)
+    - Basic command processing (connect, disconnect, ping, mock queries)
+    - Connection management and graceful shutdown
+- **Key Concepts**: Network programming, protocol design, serialization
+- **Testing**: Protocol compliance tests using the Phase 1 client
 
-### Phase 2: Query Parser and Planner (Weeks 5-8)
+#### Week 5-6: Multi-Client Support and Error Handling
 
-**Objective**: Build a SQL parser that converts text queries into executable plans.
+- **Goals**: Handle multiple clients and robust error management
+- **Deliverables**:
+    - Multi-threaded connection handling
+    - Comprehensive error handling and reporting
+    - Basic authentication and session management
+    - Logging and debugging capabilities
+- **Key Concepts**: Concurrent programming, error handling, debugging
+- **Testing**: Multi-client tests using multiple instances of Phase 1 client
 
-#### Week 5-6: Lexical Analysis and Parsing
+### Phase 3: Query Parser and Execution (Weeks 7-12)
+
+**Objective**: Parse SQL and execute queries with in-memory data structures.
+
+#### Week 7-8: SQL Lexer and Parser
 
 - **Goals**: Understand programming language implementation fundamentals
 - **Deliverables**:
-    - SQL lexer for basic tokens (keywords, identifiers, literals)
+    - SQL lexer for basic tokens (keywords, identifiers, literals, operators)
     - Recursive descent parser for SELECT, INSERT, UPDATE, DELETE
     - Abstract Syntax Tree (AST) representation
-- **Key Concepts**: Formal languages, context-free grammars, parsing algorithms
-- **Testing**: SQL parsing tests with comprehensive syntax coverage
+    - Error reporting with line numbers and suggestions
+- **Key Concepts**: Formal languages, context-free grammars, parsing algorithms  
+- **Testing**: SQL parsing tests integrated with client-server communication
 
-#### Week 7-8: Query Planning and Optimization
+#### Week 9-10: In-Memory Query Execution
 
-- **Goals**: Transform SQL into efficient execution plans
+- **Goals**: Execute parsed queries on in-memory data
 - **Deliverables**:
-    - Basic query planner for single-table operations
-    - Cost-based optimization for simple queries
-    - Execution plan representation
+    - In-memory table structures (hash maps, vectors)
+    - Basic query executor for single-table operations
+    - Support for WHERE clauses, ORDER BY, basic JOINs
+    - Result set generation and formatting
+- **Key Concepts**: Data structures, algorithm implementation, query processing
+- **Testing**: End-to-end SQL execution tests through client interface
+
+#### Week 11-12: Query Planning and Optimization
+
+- **Goals**: Optimize query execution and add advanced features
+- **Deliverables**:
+    - Basic query planner and optimizer
+    - Index usage for simple queries (in-memory indexes)
+    - Aggregate functions (COUNT, SUM, AVG, MIN, MAX)
+    - Subquery support
 - **Key Concepts**: Query optimization, cost models, algorithm complexity
-- **Testing**: Query plan verification with expected execution strategies
+- **Testing**: Performance comparisons and correctness tests for complex queries
 
-### Phase 3: Server Implementation (Weeks 9-12)
+### Phase 4: Persistent Storage Engine (Weeks 13-16)
 
-**Objective**: Build a networked database server that handles multiple client connections.
+**Objective**: Replace in-memory storage with persistent, disk-based storage.
 
-#### Week 9-10: Network Protocol Design
+#### Week 13-14: File-Based Storage
 
-- **Goals**: Understand client-server communication and network programming
+- **Goals**: Understand file-based data storage and persistence
 - **Deliverables**:
-    - Custom binary protocol for database operations
-    - TCP server with connection handling
-    - Basic command processing (connect, disconnect, execute)
-- **Key Concepts**: Network programming, protocol design, serialization
-- **Testing**: Protocol compliance tests using network testing tools
+    - Page-based file I/O system (4KB pages)
+    - Basic record storage and retrieval  
+    - Simple heap file organization
+    - Data persistence across server restarts
+- **Key Concepts**: Operating system file I/O, memory mapping, page structures
+- **Testing**: Data persistence tests using client to insert/query across restarts
 
-#### Week 11-12: Concurrency and Connection Management
+#### Week 15-16: Indexing with B+ Trees
 
-- **Goals**: Handle multiple clients and ensure data consistency
+- **Goals**: Implement efficient data access through disk-based indexing
 - **Deliverables**:
-    - Multi-threaded connection handling
-    - Basic locking for concurrent access
-    - Connection pooling and resource management
-- **Key Concepts**: Concurrent programming, synchronization, deadlock prevention
-- **Testing**: Concurrency tests with multiple simulated clients
+    - B+ tree implementation for integer and string keys
+    - Insert, delete, and search operations on disk
+    - Tree balancing and split/merge operations
+    - Integration with query executor
+- **Key Concepts**: Tree algorithms, disk-based data structures, performance analysis
+- **Testing**: Index performance tests and correctness verification through client
 
-### Phase 4: Client Interface (Weeks 13-14)
-
-**Objective**: Build user-friendly interfaces to interact with the database.
-
-#### Week 13-14: Command-Line Client
-
-- **Goals**: Provide intuitive access to database functionality
-- **Deliverables**:
-    - Interactive SQL shell with command history
-    - Batch query execution from files
-    - Result formatting and display
-- **Key Concepts**: User interface design, command parsing, result presentation
-- **Testing**: CLI functionality tests with automated input/output verification
-
-### Phase 5: Advanced Features (Weeks 15-18)
+### Phase 5: Advanced Features (Weeks 17-18)
 
 **Objective**: Implement production-ready features for real-world usage.
 
@@ -145,26 +164,31 @@ The database system consists of four main components:
 
 To ensure implementations work correctly regardless of programming language, all tests use standardized interfaces:
 
-#### 1. File-Based I/O Testing
+#### 1. Client Interface Testing (Phase 1)
 
-- **Input**: Standardized binary files with test data
-- **Output**: Expected result files in JSON format
-- **Verification**: Binary comparison of output files
-- **Example**: `test_data/btree_insert.bin` → `expected_results/btree_insert.json`
+- **Method**: Command-line interface testing with standardized input/output
+- **Input**: SQL commands via stdin or command-line arguments
+- **Output**: Formatted table results via stdout in JSON or tab-separated format
+- **Verification**: Text comparison of output with expected results
+- **Example**: `echo "SELECT * FROM users;" | ./my_client` → compare with expected output
+- **Benefits**: Easy to test, debug, and verify across all programming languages
 
-#### 2. Network Protocol Testing
+#### 2. Network Protocol Testing (Phase 2+)
 
-- **Method**: TCP socket communication using binary protocol
-- **Test Suite**: Automated scripts that send protocol messages and verify responses
-- **Language Support**: Test runners available for multiple languages
-- **Example**: Connect, execute query, verify result format and content
+- **Method**: TCP socket communication using JSON protocol (human-readable)
+- **Test Suite**: Automated scripts that connect to server and send JSON messages
+- **Protocol**: Simple JSON format: `{"type": "query", "sql": "SELECT * FROM users"}`
+- **Response**: JSON format: `{"status": "success", "data": [...], "error": null}`
+- **Language Support**: JSON parsing available in all modern languages
+- **Example**: Test runner connects, sends query, verifies JSON response structure
 
-#### 3. SQL Compliance Testing
+#### 3. SQL Compliance Testing (Phase 3+)
 
-- **Standard**: Subset of SQL-92 specification
-- **Test Cases**: Comprehensive SQL queries with expected results
-- **Format**: `.sql` files with corresponding `.result` files
-- **Validation**: Query result comparison with tolerance for floating-point precision
+- **Standard**: Subset of SQL-92 specification with clearly defined grammar
+- **Test Cases**: Progressive SQL complexity from simple SELECT to complex JOINs
+- **Format**: `.sql` files with corresponding `.json` expected results
+- **Validation**: JSON comparison with tolerance for floating-point precision
+- **Client Integration**: All tests run through the client interface for consistency
 
 #### 4. Performance Benchmarking
 
@@ -176,13 +200,17 @@ To ensure implementations work correctly regardless of programming language, all
 ### 🎯 Test Execution
 
 ```bash
-# Phase-specific testing
-./test_runner.sh --phase 1 --implementation ./my_database
-./test_runner.sh --phase 2 --implementation ./my_database
-./test_runner.sh --all --implementation ./my_database
+# Phase 1: Test client interface with mock data
+./test_runner.sh --phase 1 --client ./my_client
 
-# Performance benchmarking
-./benchmark.sh --implementation ./my_database --dataset large
+# Phase 2: Test client + server communication  
+./test_runner.sh --phase 2 --client ./my_client --server ./my_server
+
+# Phase 3+: Full end-to-end testing
+./test_runner.sh --phase 3 --client ./my_client --server ./my_server
+
+# All phases with performance benchmarking
+./test_runner.sh --all --client ./my_client --server ./my_server --benchmark
 ```
 
 ### 📊 Test Reporting
@@ -202,15 +230,15 @@ real-engineer-db/
 │   ├── reference/                 # API and protocol specifications
 │   └── troubleshooting/           # Common issues and solutions
 ├── reference-implementation/       # Rust reference implementation
-│   ├── storage-engine/            # Phase 1 implementation
-│   ├── query-parser/              # Phase 2 implementation
-│   ├── server/                    # Phase 3 implementation
-│   └── client/                    # Phase 4 implementation
+│   ├── client/                    # Phase 1 implementation
+│   ├── server/                    # Phase 2 implementation
+│   ├── query-parser/              # Phase 3 implementation
+│   └── storage-engine/            # Phase 4 implementation
 ├── test-suite/                    # Language-agnostic tests
-│   ├── phase-1/                   # Storage engine tests
-│   ├── phase-2/                   # Query parser tests
-│   ├── phase-3/                   # Server tests
-│   ├── phase-4/                   # Client tests
+│   ├── phase-1/                   # Client interface tests
+│   ├── phase-2/                   # Server communication tests
+│   ├── phase-3/                   # Query processing tests
+│   ├── phase-4/                   # Storage engine tests
 │   ├── integration/               # End-to-end tests
 │   └── performance/               # Benchmark tests
 ├── test-data/                     # Standardized test datasets
@@ -259,7 +287,7 @@ real-engineer-db/
 
 4. **Study the Phase 1 Guide**
    ```bash
-   open docs/phase-guides/phase-1-storage-engine.md
+   open docs/phase-guides/phase-1-client-interface.md
    ```
 
 ### Implementation Guidelines
@@ -284,10 +312,10 @@ Each phase requires:
 
 ### Certification Levels
 
-- **🥉 Bronze**: Complete Phases 1-2 (Storage and Parsing)
-- **🥈 Silver**: Complete Phases 1-4 (Full Basic Database)
-- **🥇 Gold**: Complete All Phases with Advanced Features
-- **💎 Platinum**: Gold level + significant performance optimizations
+- **🥉 Bronze**: Complete Phases 1-2 (Client Interface and Basic Server)
+- **🥈 Silver**: Complete Phases 1-3 (Client, Server, and Query Processing)
+- **🥇 Gold**: Complete Phases 1-4 (Full Persistent Database)
+- **💎 Platinum**: Complete All Phases with Advanced Features and Optimizations
 
 ### Code Review Process
 
