@@ -213,18 +213,12 @@ EOF
     if command_exists jq; then
         # Use jq if available for safer JSON manipulation
         jq --arg name "$PROJECT_NAME" \
-           --arg dev "$DEV_PROJECT_ID" \
-           --arg prod "$PROD_PROJECT_ID" \
-           '.name = $name |
-            .scripts["deploy:dev"] = "dotenv -e .env.development -- npm run build && firebase deploy --only hosting --project \($dev)" |
-            .scripts["deploy:prod"] = "dotenv -e .env.production -- npm run build && firebase deploy --only hosting --project \($prod)"' \
+           '.name = $name' \
            package.json > package.json.tmp && mv package.json.tmp package.json
         print_success "package.json updated"
     else
         # Fallback to sed
         sed -i.bak "s/\"name\": \".*\"/\"name\": \"$PROJECT_NAME\"/" package.json
-        sed -i.bak "s/your-project-dev/$DEV_PROJECT_ID/g" package.json
-        sed -i.bak "s/your-project-prod/$PROD_PROJECT_ID/g" package.json
         rm package.json.bak
         print_success "package.json updated (using sed)"
     fi
