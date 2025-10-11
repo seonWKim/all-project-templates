@@ -380,6 +380,41 @@ EOF
         echo "  firebase use prod && firebase deploy --only firestore:rules"
     fi
 
+    # Step 10: Rename Directory
+    print_header "Step 10: Finalizing Project Setup"
+
+    # Get current directory name and parent directory
+    CURRENT_DIR=$(basename "$PWD")
+    PARENT_DIR=$(dirname "$PWD")
+    
+    # Only rename if the current directory name is different from project name
+    if [ "$CURRENT_DIR" != "$PROJECT_NAME" ]; then
+        print_info "Renaming project directory from '$CURRENT_DIR' to '$PROJECT_NAME'..."
+        
+        # Check if target directory already exists
+        if [ -d "$PARENT_DIR/$PROJECT_NAME" ]; then
+            print_warning "Directory '$PROJECT_NAME' already exists in parent directory"
+            read -p "Do you want to use a different name? (y/n): " USE_DIFFERENT_NAME
+            
+            if [[ "$USE_DIFFERENT_NAME" =~ ^[Yy]$ ]]; then
+                NEW_PROJECT_NAME=$(prompt_with_default "Enter new project directory name" "${PROJECT_NAME}-new")
+                PROJECT_NAME="$NEW_PROJECT_NAME"
+            else
+                print_warning "Skipping directory rename"
+            fi
+        fi
+        
+        # Perform the rename if target doesn't exist
+        if [ ! -d "$PARENT_DIR/$PROJECT_NAME" ] && [ "$CURRENT_DIR" != "$PROJECT_NAME" ]; then
+            cd "$PARENT_DIR"
+            mv "$CURRENT_DIR" "$PROJECT_NAME"
+            cd "$PROJECT_NAME"
+            print_success "Project directory renamed to '$PROJECT_NAME'"
+        fi
+    else
+        print_info "Project directory already has the correct name: '$PROJECT_NAME'"
+    fi
+
     # Final Summary
     print_header "Setup Complete!"
 
@@ -392,10 +427,18 @@ EOF
     echo -e "  UI Library: ${GREEN}$UI_LIBRARY${NC}\n"
 
     echo -e "${BLUE}Next Steps:${NC}"
-    echo -e "  1. Start development server: ${GREEN}npm run dev${NC}"
-    echo -e "  2. Build for production: ${GREEN}npm run build${NC}"
-    echo -e "  3. Deploy to dev: ${GREEN}npm run deploy:dev${NC}"
-    echo -e "  4. Deploy to prod: ${GREEN}npm run deploy:prod${NC}\n"
+    if [ "$CURRENT_DIR" != "$PROJECT_NAME" ]; then
+        echo -e "  1. Navigate to project: ${GREEN}cd ../$PROJECT_NAME${NC}"
+        echo -e "  2. Start development server: ${GREEN}npm run dev${NC}"
+        echo -e "  3. Build for production: ${GREEN}npm run build${NC}"
+        echo -e "  4. Deploy to dev: ${GREEN}npm run deploy:dev${NC}"
+        echo -e "  5. Deploy to prod: ${GREEN}npm run deploy:prod${NC}\n"
+    else
+        echo -e "  1. Start development server: ${GREEN}npm run dev${NC}"
+        echo -e "  2. Build for production: ${GREEN}npm run build${NC}"
+        echo -e "  3. Deploy to dev: ${GREEN}npm run deploy:dev${NC}"
+        echo -e "  4. Deploy to prod: ${GREEN}npm run deploy:prod${NC}\n"
+    fi
 
     echo -e "${BLUE}Firebase Console Links:${NC}"
     echo -e "  Dev: ${GREEN}https://console.firebase.google.com/project/$DEV_PROJECT_ID${NC}"
