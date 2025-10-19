@@ -1,8 +1,0 @@
-### find all jobs
-GET http://localhost:8080/jobs
-
-### find specific job
-GET http://localhost:8080/jobs/monthlyPaymentSettlementJob
-
-### start specific job
-POST http://localhost:8080/jobs/monthlyPaymentSettlementJob/start?jobStartDate=20220628
