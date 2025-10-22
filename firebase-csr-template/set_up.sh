@@ -169,13 +169,13 @@ EOF
     print_header "Step 1: Project Configuration"
 
     # Generate random strings for unique project IDs (done once)
-    RANDOM_DEV=$(generate_random_string 6)
-    RANDOM_PROD=$(generate_random_string 6)
+    RANDOM_DEV=$(generate_random_string 4)
+    RANDOM_PROD=$(generate_random_string 4)
 
     # Firebase project ID max length is 30 characters
-    # Format: "name-dev-abc123" = name + "-dev-" (5) + random (6) = 11 chars reserved
-    # So base name can be max 19 chars after sanitization
-    MAX_BASE_LENGTH=19
+    # Format: "name-dev-ab12" = name + "-dev-" (5) + random (4) = 9 chars reserved
+    # So base name can be max 21 chars after sanitization
+    MAX_BASE_LENGTH=21
 
     # Loop until we get a valid project name
     VALID_NAME=false
