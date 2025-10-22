@@ -1,7 +1,24 @@
 {
   "projects": {
-    "default": "firebase-ssr-template-dev",
-    "dev": "firebase-ssr-template-dev",
-    "prod": "firebase-ssr-template-prod"
-  }
+    "default": "your-project-dev-{randomString}",
+    "dev": "your-project-dev-{randomString}",
+    "prod": "your-project-prod-{randomString}"
+  },
+  "targets": {
+    "your-project-dev-{randomString}": {
+      "hosting": {
+        "dev": [
+          "your-project-dev-{randomString}"
+        ]
+      }
+    },
+    "indie-developer-tools-prod-{randomString}": {
+      "hosting": {
+        "prod": [
+          "your-project-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

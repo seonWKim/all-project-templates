@@ -79,6 +79,73 @@ prompt_with_default() {
     fi
 }
 
+# Generate random string for project ID uniqueness
+generate_random_string() {
+    local length="${1:-6}"
+    cat /dev/urandom | LC_ALL=C tr -dc 'a-z0-9' | fold -w "$length" | head -n 1
+}
+
+# Create Firebase project
+create_firebase_project() {
+    local project_id="$1"
+    local display_name="$2"
+
+    # Sanitize display name (remove special chars, max 30 chars)
+    local sanitized_display=$(echo "$display_name" | tr -cd '[:alnum:] -' | sed 's/  */ /g')
+    if [ ${#sanitized_display} -gt 30 ]; then
+        sanitized_display="${sanitized_display:0:30}"
+    fi
+
+    print_info "Creating Firebase project: $project_id..."
+
+    if firebase projects:create "$project_id" --display-name "$sanitized_display" 2>&1; then
+        print_success "Firebase project created: $project_id"
+        return 0
+    else
+        print_error "Failed to create Firebase project: $project_id"
+        return 1
+    fi
+}
+
+# Create Firebase web app and return the app ID
+create_firebase_web_app() {
+    local project_id="$1"
+    local app_name="$2"
+
+    print_info "Creating web app in project $project_id..."
+
+    firebase use "$project_id" >/dev/null 2>&1
+    local output=$(firebase apps:create web "$app_name" 2>&1)
+
+    if echo "$output" | grep -q "Created"; then
+        print_success "Web app created: $app_name"
+        # Extract app ID from output (format: "App ID: 1:123456789:web:abc123def456")
+        local app_id=$(echo "$output" | grep "App ID:" | sed 's/.*App ID: //' | tr -d '\n')
+        echo "$app_id"
+        return 0
+    else
+        print_warning "Web app may already exist or creation failed"
+        return 1
+    fi
+}
+
+# Fetch Firebase config for a web app
+fetch_firebase_config() {
+    local project_id="$1"
+
+    print_info "Fetching Firebase configuration for $project_id..."
+
+    firebase use "$project_id" >/dev/null 2>&1
+    local config=$(firebase apps:sdkconfig web 2>/dev/null)
+
+    if [ $? -eq 0 ] && [ -n "$config" ]; then
+        echo "$config"
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Main setup function
 main() {
     clear
@@ -101,82 +168,79 @@ EOF
     # Step 1: Project Configuration
     print_header "Step 1: Project Configuration"
 
-    PROJECT_NAME=$(prompt_with_default "Enter your project name" "firebase-ssr-template")
-    print_info "Project name: $PROJECT_NAME"
+    # Generate random strings for unique project IDs (done once)
+    RANDOM_DEV=$(generate_random_string 6)
+    RANDOM_PROD=$(generate_random_string 6)
 
-    # Use provided project ID as base or ask for input
-    if [ -n "$PROJECT_ID_ARG" ]; then
-        BASE_PROJECT_ID="$PROJECT_ID_ARG"
-        print_info "Using base project ID: $BASE_PROJECT_ID"
-        DEV_PROJECT_ID=$(prompt_with_default "Enter Firebase DEV project ID" "${BASE_PROJECT_ID}-dev")
-        PROD_PROJECT_ID=$(prompt_with_default "Enter Firebase PROD project ID" "${BASE_PROJECT_ID}-prod")
-    else
-        DEV_PROJECT_ID=$(prompt_with_default "Enter Firebase DEV project ID" "${PROJECT_NAME}-dev")
-        PROD_PROJECT_ID=$(prompt_with_default "Enter Firebase PROD project ID" "${PROJECT_NAME}-prod")
-    fi
+    # Firebase project ID max length is 30 characters
+    # Format: "name-dev-abc123" = name + "-dev-" (5) + random (6) = 11 chars reserved
+    # So base name can be max 19 chars after sanitization
+    MAX_BASE_LENGTH=19
+
+    # Loop until we get a valid project name
+    VALID_NAME=false
+    while [ "$VALID_NAME" = false ]; do
+        if [ -n "$PROJECT_ID_ARG" ] && [ "$VALID_NAME" = false ]; then
+            # First iteration with provided argument
+            BASE_PROJECT_NAME="$PROJECT_ID_ARG"
+            PROJECT_NAME="$BASE_PROJECT_NAME"
+            print_info "Using provided project name: $BASE_PROJECT_NAME"
+            PROJECT_ID_ARG=""  # Clear so we don't use it again
+        else
+            # Prompt for project name
+            PROJECT_NAME=$(prompt_with_default "Enter your project name" "firebase-ssr-template")
+            BASE_PROJECT_NAME="$PROJECT_NAME"
+        fi
+
+        # Sanitize project name (lowercase, replace spaces/underscores with hyphens, remove invalid chars)
+        SANITIZED_BASE=$(echo "$BASE_PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | tr '_' '-' | tr -cd '[:alnum:]-')
+
+        # Check length
+        if [ ${#SANITIZED_BASE} -gt $MAX_BASE_LENGTH ]; then
+            print_error "Project name '$BASE_PROJECT_NAME' is too long"
+            echo -e "${YELLOW}After sanitization: '$SANITIZED_BASE' (${#SANITIZED_BASE} chars)${NC}"
+            echo -e "${YELLOW}Maximum allowed: $MAX_BASE_LENGTH characters${NC}"
+            echo -e "${YELLOW}Final project IDs will be: <name>-dev-${RANDOM_DEV} and <name>-prod-${RANDOM_PROD}${NC}"
+            echo ""
+        else
+            VALID_NAME=true
+        fi
+    done
+
+    print_info "Project name: $PROJECT_NAME"
+    print_info "Sanitized base: $SANITIZED_BASE"
+
+    # Create project IDs with random suffixes to prevent collisions
+    DEV_PROJECT_ID="${SANITIZED_BASE}-dev-${RANDOM_DEV}"
+    PROD_PROJECT_ID="${SANITIZED_BASE}-prod-${RANDOM_PROD}"
+
+    print_info "Generated DEV project ID: $DEV_PROJECT_ID (${#DEV_PROJECT_ID} chars)"
+    print_info "Generated PROD project ID: $PROD_PROJECT_ID (${#PROD_PROJECT_ID} chars)"
+
+    # Update .firebaserc immediately to avoid Firebase CLI reading invalid placeholder values
+    print_info "Updating .firebaserc with generated project IDs..."
+    cat > .firebaserc << EOF
+{
+  "projects": {
+    "default": "$DEV_PROJECT_ID",
+    "dev": "$DEV_PROJECT_ID",
+    "prod": "$PROD_PROJECT_ID"
+  }
+}
+EOF
 
     print_success "Project configuration set"
 
-    # Step 2: Firebase Configuration
-    print_header "Step 2: Firebase Configuration"
-
-    echo -e "${YELLOW}You'll need to get these values from Firebase Console:${NC}"
-    echo -e "${BLUE}https://console.firebase.google.com/${NC}\n"
-    echo "Go to Project Settings > General > Your apps > Web app"
-    echo ""
-
-    read -p "Press Enter to continue with DEV environment configuration..."
-
-    # Development Environment
-    print_info "Development Environment Configuration"
-
-    DEV_API_KEY=$(prompt_with_default "DEV API Key" "")
-    DEV_AUTH_DOMAIN=$(prompt_with_default "DEV Auth Domain" "${DEV_PROJECT_ID}.firebaseapp.com")
-    DEV_STORAGE_BUCKET=$(prompt_with_default "DEV Storage Bucket" "${DEV_PROJECT_ID}.firebasestorage.app")
-    DEV_MESSAGING_SENDER_ID=$(prompt_with_default "DEV Messaging Sender ID" "")
-    DEV_APP_ID=$(prompt_with_default "DEV App ID" "")
-    DEV_MEASUREMENT_ID=$(prompt_with_default "DEV Measurement ID (optional)" "")
-    DEV_VAPID_KEY=$(prompt_with_default "DEV VAPID Key (optional, for push notifications)" "")
-
-    echo ""
-    print_info "For SSR, you'll also need Firebase Admin SDK credentials:"
-    print_warning "Go to Project Settings > Service Accounts > Generate new private key"
-    echo ""
-    
-    DEV_CLIENT_EMAIL=$(prompt_with_default "DEV Service Account Email" "")
-    echo "DEV Private Key (paste the entire private key including headers):"
-    read -r DEV_PRIVATE_KEY
-
-    echo ""
-    read -p "Press Enter to continue with PROD environment configuration..."
-
-    # Production Environment
-    print_info "Production Environment Configuration"
-
-    PROD_API_KEY=$(prompt_with_default "PROD API Key" "")
-    PROD_AUTH_DOMAIN=$(prompt_with_default "PROD Auth Domain" "${PROD_PROJECT_ID}.firebaseapp.com")
-    PROD_STORAGE_BUCKET=$(prompt_with_default "PROD Storage Bucket" "${PROD_PROJECT_ID}.firebasestorage.app")
-    PROD_MESSAGING_SENDER_ID=$(prompt_with_default "PROD Messaging Sender ID" "")
-    PROD_APP_ID=$(prompt_with_default "PROD App ID" "")
-    PROD_MEASUREMENT_ID=$(prompt_with_default "PROD Measurement ID (optional)" "")
-    PROD_VAPID_KEY=$(prompt_with_default "PROD VAPID Key (optional, for push notifications)" "")
-
-    PROD_CLIENT_EMAIL=$(prompt_with_default "PROD Service Account Email" "")
-    echo "PROD Private Key (paste the entire private key including headers):"
-    read -r PROD_PRIVATE_KEY
-
-    print_success "Firebase configuration collected"
-
-    # Step 3: App Metadata
-    print_header "Step 3: App Metadata"
+    # Step 2: App Metadata
+    print_header "Step 2: App Metadata"
 
     APP_TITLE=$(prompt_with_default "App title" "$PROJECT_NAME")
     APP_DESCRIPTION=$(prompt_with_default "App description" "A Next.js SSR app powered by Firebase App Hosting")
 
     print_success "App metadata set"
 
-    # Step 4: UI Library Selection
-    print_header "Step 4: UI Library Selection"
+    # Step 3: UI Library Selection
+    print_header "Step 3: UI Library Selection"
 
     echo "Select a UI library to install:"
     echo "1) Shadcn UI (Recommended)"
@@ -200,8 +264,8 @@ EOF
 
     print_success "UI library selection: $UI_LIBRARY"
 
-    # Step 5: Firebase Login
-    print_header "Step 5: Firebase Authentication"
+    # Step 4: Firebase Login and Project Creation
+    print_header "Step 4: Firebase Authentication and Project Creation"
 
     read -p "Do you want to login to Firebase now? (y/n): " LOGIN_CHOICE
 
@@ -213,9 +277,166 @@ EOF
             print_error "Firebase login failed"
             exit 1
         fi
+
+        # Create Firebase projects
+        echo ""
+        print_info "Creating Firebase projects..."
+        echo ""
+
+        read -p "Do you want to create Firebase projects automatically? (y/n): " CREATE_PROJECTS
+
+        if [[ "$CREATE_PROJECTS" =~ ^[Yy]$ ]]; then
+            # Create DEV project
+            if create_firebase_project "$DEV_PROJECT_ID" "$PROJECT_NAME (Dev)"; then
+                DEV_PROJECT_CREATED=true
+            else
+                print_warning "Failed to create DEV project. You may need to create it manually."
+                DEV_PROJECT_CREATED=false
+            fi
+
+            echo ""
+
+            # Create PROD project
+            if create_firebase_project "$PROD_PROJECT_ID" "$PROJECT_NAME (Prod)"; then
+                PROD_PROJECT_CREATED=true
+            else
+                print_warning "Failed to create PROD project. You may need to create it manually."
+                PROD_PROJECT_CREATED=false
+            fi
+
+            echo ""
+            print_info "Waiting for projects to be ready..."
+            sleep 3
+
+            # Create web apps for the projects
+            if [ "$DEV_PROJECT_CREATED" = true ]; then
+                create_firebase_web_app "$DEV_PROJECT_ID" "$PROJECT_NAME-dev-web"
+            fi
+
+            if [ "$PROD_PROJECT_CREATED" = true ]; then
+                create_firebase_web_app "$PROD_PROJECT_ID" "$PROJECT_NAME-prod-web"
+            fi
+
+            print_success "Firebase projects and web apps created"
+            PROJECTS_CREATED=true
+        else
+            print_warning "Skipping Firebase project creation."
+            echo "You'll need to create the projects manually:"
+            echo "  DEV:  firebase projects:create $DEV_PROJECT_ID --display-name \"$PROJECT_NAME (Dev)\""
+            echo "  PROD: firebase projects:create $PROD_PROJECT_ID --display-name \"$PROJECT_NAME (Prod)\""
+            PROJECTS_CREATED=false
+        fi
     else
-        print_warning "Skipping Firebase login. You'll need to login later with: firebase login"
+        print_warning "Skipping Firebase login and project creation."
+        echo "You'll need to:"
+        echo "  1. Login: firebase login"
+        echo "  2. Create DEV project: firebase projects:create $DEV_PROJECT_ID --display-name \"$PROJECT_NAME (Dev)\""
+        echo "  3. Create PROD project: firebase projects:create $PROD_PROJECT_ID --display-name \"$PROJECT_NAME (Prod)\""
+        PROJECTS_CREATED=false
     fi
+
+    # Step 5: Firebase Configuration
+    print_header "Step 5: Firebase Configuration"
+
+    # Development Environment
+    print_info "Development Environment Configuration"
+
+    if [ "$PROJECTS_CREATED" = true ] && [ "$DEV_PROJECT_CREATED" = true ]; then
+        print_info "Attempting to fetch DEV configuration automatically..."
+        DEV_CONFIG=$(fetch_firebase_config "$DEV_PROJECT_ID")
+
+        if [ $? -eq 0 ]; then
+            DEV_API_KEY=$(echo "$DEV_CONFIG" | grep "apiKey" | sed 's/.*apiKey: "\(.*\)".*/\1/')
+            DEV_AUTH_DOMAIN=$(echo "$DEV_CONFIG" | grep "authDomain" | sed 's/.*authDomain: "\(.*\)".*/\1/')
+            DEV_STORAGE_BUCKET=$(echo "$DEV_CONFIG" | grep "storageBucket" | sed 's/.*storageBucket: "\(.*\)".*/\1/')
+            DEV_MESSAGING_SENDER_ID=$(echo "$DEV_CONFIG" | grep "messagingSenderId" | sed 's/.*messagingSenderId: "\(.*\)".*/\1/')
+            DEV_APP_ID=$(echo "$DEV_CONFIG" | grep "appId" | sed 's/.*appId: "\(.*\)".*/\1/')
+            DEV_MEASUREMENT_ID=$(echo "$DEV_CONFIG" | grep "measurementId" | sed 's/.*measurementId: "\(.*\)".*/\1/')
+
+            print_success "DEV configuration fetched automatically"
+            echo -e "  API Key: ${GREEN}${DEV_API_KEY:0:20}...${NC}"
+            echo -e "  Auth Domain: ${GREEN}${DEV_AUTH_DOMAIN}${NC}"
+            echo -e "  Storage Bucket: ${GREEN}${DEV_STORAGE_BUCKET}${NC}"
+        else
+            print_warning "Could not fetch DEV config automatically. Please enter manually."
+            DEV_API_KEY=$(prompt_with_default "DEV API Key" "")
+            DEV_AUTH_DOMAIN=$(prompt_with_default "DEV Auth Domain" "${DEV_PROJECT_ID}.firebaseapp.com")
+            DEV_STORAGE_BUCKET=$(prompt_with_default "DEV Storage Bucket" "${DEV_PROJECT_ID}.firebasestorage.app")
+            DEV_MESSAGING_SENDER_ID=$(prompt_with_default "DEV Messaging Sender ID" "")
+            DEV_APP_ID=$(prompt_with_default "DEV App ID" "")
+            DEV_MEASUREMENT_ID=$(prompt_with_default "DEV Measurement ID (optional)" "")
+        fi
+    else
+        echo -e "${YELLOW}Get DEV configuration from Firebase Console:${NC}"
+        echo -e "${BLUE}https://console.firebase.google.com/project/$DEV_PROJECT_ID${NC}\n"
+        DEV_API_KEY=$(prompt_with_default "DEV API Key" "")
+        DEV_AUTH_DOMAIN=$(prompt_with_default "DEV Auth Domain" "${DEV_PROJECT_ID}.firebaseapp.com")
+        DEV_STORAGE_BUCKET=$(prompt_with_default "DEV Storage Bucket" "${DEV_PROJECT_ID}.firebasestorage.app")
+        DEV_MESSAGING_SENDER_ID=$(prompt_with_default "DEV Messaging Sender ID" "")
+        DEV_APP_ID=$(prompt_with_default "DEV App ID" "")
+        DEV_MEASUREMENT_ID=$(prompt_with_default "DEV Measurement ID (optional)" "")
+    fi
+
+    DEV_VAPID_KEY=$(prompt_with_default "DEV VAPID Key (optional, for push notifications)" "")
+
+    echo ""
+    print_info "For SSR, you'll also need Firebase Admin SDK credentials:"
+    print_warning "Go to Project Settings > Service Accounts > Generate new private key"
+    echo ""
+
+    DEV_CLIENT_EMAIL=$(prompt_with_default "DEV Service Account Email" "")
+    echo "DEV Private Key (paste the entire private key including headers):"
+    read -r DEV_PRIVATE_KEY
+
+    echo ""
+    read -p "Press Enter to continue with PROD environment configuration..."
+
+    # Production Environment
+    print_info "Production Environment Configuration"
+
+    if [ "$PROJECTS_CREATED" = true ] && [ "$PROD_PROJECT_CREATED" = true ]; then
+        print_info "Attempting to fetch PROD configuration automatically..."
+        PROD_CONFIG=$(fetch_firebase_config "$PROD_PROJECT_ID")
+
+        if [ $? -eq 0 ]; then
+            PROD_API_KEY=$(echo "$PROD_CONFIG" | grep "apiKey" | sed 's/.*apiKey: "\(.*\)".*/\1/')
+            PROD_AUTH_DOMAIN=$(echo "$PROD_CONFIG" | grep "authDomain" | sed 's/.*authDomain: "\(.*\)".*/\1/')
+            PROD_STORAGE_BUCKET=$(echo "$PROD_CONFIG" | grep "storageBucket" | sed 's/.*storageBucket: "\(.*\)".*/\1/')
+            PROD_MESSAGING_SENDER_ID=$(echo "$PROD_CONFIG" | grep "messagingSenderId" | sed 's/.*messagingSenderId: "\(.*\)".*/\1/')
+            PROD_APP_ID=$(echo "$PROD_CONFIG" | grep "appId" | sed 's/.*appId: "\(.*\)".*/\1/')
+            PROD_MEASUREMENT_ID=$(echo "$PROD_CONFIG" | grep "measurementId" | sed 's/.*measurementId: "\(.*\)".*/\1/')
+
+            print_success "PROD configuration fetched automatically"
+            echo -e "  API Key: ${GREEN}${PROD_API_KEY:0:20}...${NC}"
+            echo -e "  Auth Domain: ${GREEN}${PROD_AUTH_DOMAIN}${NC}"
+            echo -e "  Storage Bucket: ${GREEN}${PROD_STORAGE_BUCKET}${NC}"
+        else
+            print_warning "Could not fetch PROD config automatically. Please enter manually."
+            PROD_API_KEY=$(prompt_with_default "PROD API Key" "")
+            PROD_AUTH_DOMAIN=$(prompt_with_default "PROD Auth Domain" "${PROD_PROJECT_ID}.firebaseapp.com")
+            PROD_STORAGE_BUCKET=$(prompt_with_default "PROD Storage Bucket" "${PROD_PROJECT_ID}.firebasestorage.app")
+            PROD_MESSAGING_SENDER_ID=$(prompt_with_default "PROD Messaging Sender ID" "")
+            PROD_APP_ID=$(prompt_with_default "PROD App ID" "")
+            PROD_MEASUREMENT_ID=$(prompt_with_default "PROD Measurement ID (optional)" "")
+        fi
+    else
+        echo -e "${YELLOW}Get PROD configuration from Firebase Console:${NC}"
+        echo -e "${BLUE}https://console.firebase.google.com/project/$PROD_PROJECT_ID${NC}\n"
+        PROD_API_KEY=$(prompt_with_default "PROD API Key" "")
+        PROD_AUTH_DOMAIN=$(prompt_with_default "PROD Auth Domain" "${PROD_PROJECT_ID}.firebaseapp.com")
+        PROD_STORAGE_BUCKET=$(prompt_with_default "PROD Storage Bucket" "${PROD_PROJECT_ID}.firebasestorage.app")
+        PROD_MESSAGING_SENDER_ID=$(prompt_with_default "PROD Messaging Sender ID" "")
+        PROD_APP_ID=$(prompt_with_default "PROD App ID" "")
+        PROD_MEASUREMENT_ID=$(prompt_with_default "PROD Measurement ID (optional)" "")
+    fi
+
+    PROD_VAPID_KEY=$(prompt_with_default "PROD VAPID Key (optional, for push notifications)" "")
+
+    PROD_CLIENT_EMAIL=$(prompt_with_default "PROD Service Account Email" "")
+    echo "PROD Private Key (paste the entire private key including headers):"
+    read -r PROD_PRIVATE_KEY
+
+    print_success "Firebase configuration collected"
 
     # Step 6: Apply Configuration
     print_header "Step 6: Applying Configuration"
@@ -235,19 +456,6 @@ EOF
         rm package.json.bak
         print_success "package.json updated (using sed)"
     fi
-
-    # Update .firebaserc
-    print_info "Updating .firebaserc..."
-    cat > .firebaserc << EOF
-{
-  "projects": {
-    "default": "$DEV_PROJECT_ID",
-    "dev": "$DEV_PROJECT_ID",
-    "prod": "$PROD_PROJECT_ID"
-  }
-}
-EOF
-    print_success ".firebaserc updated"
 
     # Create .env.development
     print_info "Creating .env.development..."
