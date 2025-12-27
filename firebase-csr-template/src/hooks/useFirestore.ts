@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import {
   collection,
   doc,
@@ -10,9 +10,6 @@ import {
   updateDoc,
   deleteDoc,
   query,
-  where,
-  orderBy,
-  limit,
   QueryConstraint,
   DocumentData,
   FirestoreError,
@@ -65,6 +62,7 @@ export function useFirestoreDoc<T = DocumentData>(
 
 /**
  * Hook for fetching a collection from Firestore
+ * Note: Memoize the constraints array in the calling component to prevent unnecessary re-fetches
  */
 export function useFirestoreCollection<T = DocumentData>(
   collectionName: string,
@@ -73,6 +71,12 @@ export function useFirestoreCollection<T = DocumentData>(
   const [data, setData] = useState<T[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<FirestoreError | null>(null);
+
+  // Stringify constraints to use as dependency
+  const constraintsKey = useMemo(
+    () => JSON.stringify(constraints.map(c => c.type)),
+    [constraints]
+  );
 
   useEffect(() => {
     const fetchCollection = async () => {
@@ -100,7 +104,7 @@ export function useFirestoreCollection<T = DocumentData>(
     };
 
     fetchCollection();
-  }, [collectionName, constraints]);
+  }, [collectionName, constraintsKey, constraints]);
 
   return { data, loading, error };
 }
@@ -168,4 +172,4 @@ export function useFirestore<T = DocumentData>(collectionName: string) {
 }
 
 // Re-export Firestore query utilities for convenience
-export { where, orderBy, limit };
+export { where, orderBy, limit } from "firebase/firestore";

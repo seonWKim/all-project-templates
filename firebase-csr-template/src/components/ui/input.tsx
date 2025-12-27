@@ -2,6 +2,7 @@
 
 import React, { InputHTMLAttributes, forwardRef } from "react";
 import { cn } from "@/lib/utils";
+import { generateId } from "@/lib/utils";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -12,10 +13,13 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
  * Sanitize label text to create a valid HTML ID
  */
 function sanitizeId(text: string): string {
-  return text
+  const sanitized = text
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+  
+  // Fallback to a random ID if sanitization results in empty string
+  return sanitized || `input-${generateId(8)}`;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
