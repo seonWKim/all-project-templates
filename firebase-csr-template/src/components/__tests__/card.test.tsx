@@ -1,6 +1,13 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../ui/card";
 import "@testing-library/jest-dom";
 
 describe("Card components", () => {

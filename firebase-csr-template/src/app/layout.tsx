@@ -13,14 +13,15 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Firebase CSR Template</title>
-        <meta name="description" content="A modern Next.js app powered by Firebase with full authentication and database support" />
+        <meta
+          name="description"
+          content="A modern Next.js app powered by Firebase with full authentication and database support"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body>
         <ErrorBoundary>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
+          <ToastProvider>{children}</ToastProvider>
         </ErrorBoundary>
       </body>
     </html>

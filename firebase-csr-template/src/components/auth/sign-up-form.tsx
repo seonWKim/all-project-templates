@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getAuthAdapter } from "@/adapters/baas/factory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -71,14 +70,11 @@ export function SignUpForm({ onSuccess, onSignInClick }: SignUpFormProps) {
     setIsLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const authAdapter = getAuthAdapter();
+      const user = await authAdapter.signUp({ email, password });
 
       // Update user profile with name
-      await updateProfile(userCredential.user, {
+      await authAdapter.updateProfile(user.id, {
         displayName: name,
       });
 
@@ -122,7 +118,7 @@ export function SignUpForm({ onSuccess, onSignInClick }: SignUpFormProps) {
             label="Name"
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={e => setName(e.target.value)}
             placeholder="John Doe"
             error={errors.name}
             disabled={isLoading}
@@ -133,7 +129,7 @@ export function SignUpForm({ onSuccess, onSignInClick }: SignUpFormProps) {
             label="Email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             placeholder="your@email.com"
             error={errors.email}
             disabled={isLoading}
@@ -144,7 +140,7 @@ export function SignUpForm({ onSuccess, onSignInClick }: SignUpFormProps) {
             label="Password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             placeholder="••••••••"
             error={errors.password}
             disabled={isLoading}
@@ -155,7 +151,7 @@ export function SignUpForm({ onSuccess, onSignInClick }: SignUpFormProps) {
             label="Confirm Password"
             type="password"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            onChange={e => setConfirmPassword(e.target.value)}
             placeholder="••••••••"
             error={errors.confirmPassword}
             disabled={isLoading}

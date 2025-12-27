@@ -53,7 +53,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {isLoading ? (
           <div className="flex items-center gap-2">
-            <div 
+            <div
               className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"
               role="status"
               aria-label="Loading"

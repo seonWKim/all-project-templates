@@ -35,7 +35,10 @@ interface LoadingProps {
   fullScreen?: boolean;
 }
 
-export function Loading({ message = "Loading...", fullScreen = false }: LoadingProps) {
+export function Loading({
+  message = "Loading...",
+  fullScreen = false,
+}: LoadingProps) {
   const containerClass = fullScreen
     ? "flex min-h-screen items-center justify-center"
     : "flex items-center justify-center p-8";
