@@ -40,12 +40,12 @@ export const storage: FirebaseStorage = getStorage(app);
 let messaging: Messaging | null = null;
 if (typeof window !== "undefined") {
   isSupported()
-    .then((supported) => {
+    .then(supported => {
       if (supported) {
         messaging = getMessaging(app);
       }
     })
-    .catch((error) => {
+    .catch(error => {
       console.warn("Firebase Messaging not supported:", error);
     });
 }

@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/lib/firebase";
+import { getAuthAdapter } from "@/adapters/baas/factory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
@@ -17,7 +16,9 @@ export function SignInForm({ onSuccess, onSignUpClick }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
   const { showToast } = useToast();
 
   const validateForm = () => {
@@ -49,7 +50,8 @@ export function SignInForm({ onSuccess, onSignUpClick }: SignInFormProps) {
     setIsLoading(true);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const authAdapter = getAuthAdapter();
+      await authAdapter.signIn({ email, password });
       showToast("Successfully signed in!", "success");
       onSuccess?.();
     } catch (error: unknown) {
@@ -92,7 +94,7 @@ export function SignInForm({ onSuccess, onSignUpClick }: SignInFormProps) {
             label="Email"
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             placeholder="your@email.com"
             error={errors.email}
             disabled={isLoading}
@@ -103,7 +105,7 @@ export function SignInForm({ onSuccess, onSignUpClick }: SignInFormProps) {
             label="Password"
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
             placeholder="••••••••"
             error={errors.password}
             disabled={isLoading}
@@ -116,7 +118,9 @@ export function SignInForm({ onSuccess, onSignUpClick }: SignInFormProps) {
 
           {onSignUpClick && (
             <div className="text-center text-sm">
-              <span className="text-gray-600">Don&apos;t have an account? </span>
+              <span className="text-gray-600">
+                Don&apos;t have an account?{" "}
+              </span>
               <button
                 type="button"
                 onClick={onSignUpClick}

@@ -1,16 +1,29 @@
-# Firebase CSR Template
+# Firebase CSR Template (Hexagonal Architecture)
 
-A comprehensive, production-ready Next.js + Firebase template for building modern client-side rendered (CSR) web applications. This template provides a complete foundation with TypeScript, Tailwind CSS, Firebase integration, pre-built UI components, authentication flows, testing setup, and Claude Code agents.
+A comprehensive, production-ready Next.js + Firebase template for building modern client-side rendered (CSR) web applications with **hexagonal architecture** and **BAAS provider abstraction**. This template enables seamless switching between Firebase, AWS, Supabase, or any other Backend-as-a-Service provider.
 
 ## ✨ Features
 
 ### Core Stack
+
 - **Next.js 15** with App Router and Turbopack (Static Export / CSR only)
 - **React 19** with modern hooks and patterns
 - **TypeScript** for full type safety
 - **Tailwind CSS 4** for utility-first styling
 
+### Hexagonal Architecture
+
+- **Ports and Adapters Pattern**
+  - Clean separation between business logic and external services
+  - BAAS-agnostic design - switch providers without changing business logic
+  - Testable, maintainable, and scalable architecture
+- **BAAS Abstraction Layer**
+  - Currently supports Firebase (fully implemented)
+  - Ready for AWS Amplify, Supabase, or custom backends
+  - Port interfaces for Auth, Database, Storage, Messaging
+
 ### Firebase Integration
+
 - **Authentication** (client-side) with pre-built sign-in/sign-up forms
 - **Firestore Database** (client-side) with security rules
 - **Cloud Functions** (backend) with examples
@@ -19,6 +32,7 @@ A comprehensive, production-ready Next.js + Firebase template for building moder
 - **Hosting** (static files) with automatic SSL
 
 ### UI Components
+
 - **Reusable Components**: Button, Input, Card, Toast notifications
 - **Authentication Forms**: Sign-in and sign-up with validation
 - **Protected Routes**: Automatic route protection for authenticated pages
@@ -27,7 +41,11 @@ A comprehensive, production-ready Next.js + Firebase template for building moder
 - **Loading States**: Smooth loading indicators throughout
 
 ### Developer Experience
+
 - **Jest Testing** with React Testing Library
+  - Architectural tests to enforce design boundaries
+  - Port interface validation
+  - Component tests with coverage
 - **ESLint & Prettier** for code quality
 - **Type-Safe Environment Variables** with validation
 - **Claude Code Agents** for AI-assisted development
@@ -35,13 +53,56 @@ A comprehensive, production-ready Next.js + Firebase template for building moder
 - **Hot Module Replacement** for fast development
 
 ### Security
+
 - **No Vulnerabilities**: All dependencies audited and secured
 - **CodeQL Scanned**: Automated security analysis
 - **Enhanced Firestore Rules**: Comprehensive security examples
 - **Input Validation**: Client-side form validation
 - **Error Handling**: Proper error boundaries and user feedback
 
+### Comprehensive Documentation
+
+- **ARCHITECTURE.md** - Hexagonal architecture principles
+- **CLAUDE.md** - AI assistant guidelines with architectural decisions
+- **BAAS_CONFIGURATION.md** - Provider switching guide
+- **README.md** - This file with quick start and usage
+
 > **Note**: This template is configured for client-side rendering (CSR) only. All pages are static exports with no server-side rendering or API routes.
+
+## Architecture Overview
+
+This template follows **Hexagonal Architecture** principles:
+
+```
+┌─────────────────────────────────────────────────┐
+│              Primary Adapters                   │
+│         (UI Components, API Routes)             │
+└────────────────┬────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────┐
+│           Application Layer                     │
+│          (Use Cases, Services)                  │
+└────────────────┬────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────┐
+│            Domain Layer                         │
+│     (Business Logic, Port Interfaces)           │
+└────────────────┬────────────────────────────────┘
+                 │
+┌────────────────▼────────────────────────────────┐
+│          Secondary Adapters                     │
+│    (Firebase, AWS, Supabase, etc.)              │
+└─────────────────────────────────────────────────┘
+```
+
+**Key Benefits:**
+
+- Switch BAAS providers via environment variable
+- Business logic independent of external services
+- Easy to test with mocked adapters
+- Clear boundaries and separation of concerns
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed architecture documentation.
 
 ## Quick Start
 
@@ -68,6 +129,7 @@ npm run setup
    - `your-project-prod` (production)
 
 2. Copy environment files:
+
 ```bash
 cp .env.development.example .env.development
 cp .env.production.example .env.production
@@ -76,6 +138,7 @@ cp .env.production.example .env.production
 3. Update `.env.development` and `.env.production` with your Firebase credentials
 
 4. Update `.firebaserc` with your project IDs:
+
 ```json
 {
   "projects": {
@@ -87,11 +150,13 @@ cp .env.production.example .env.production
 ```
 
 5. Login to Firebase:
+
 ```bash
 firebase login
 ```
 
 6. Initialize Firebase (optional - if you need to reconfigure):
+
 ```bash
 firebase init
 ```
@@ -99,6 +164,7 @@ firebase init
 ### 4. Update Project Names
 
 Update the following files with your project name:
+
 - `package.json` - Change `name` field
 - `template/src/app/layout.tsx` - Update metadata
 - `template/README.md` - Update project name
@@ -115,6 +181,7 @@ npm run dev
 ## Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start dev server with Turbopack
 npm run build        # Build for production
@@ -122,6 +189,7 @@ npm run start        # Serve production build locally
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint         # Run ESLint
 npm run lint:fix     # Fix ESLint issues
@@ -130,6 +198,7 @@ npm run format:check # Check code formatting
 ```
 
 ### Testing
+
 ```bash
 npm test             # Run tests
 npm run test:watch   # Run tests in watch mode
@@ -137,6 +206,7 @@ npm run test:coverage # Run tests with coverage
 ```
 
 ### Deployment
+
 ```bash
 npm run deploy       # Deploy to both dev and prod
 npm run deploy:dev   # Deploy to development
@@ -144,6 +214,7 @@ npm run deploy:prod  # Deploy to production
 ```
 
 ### Firebase Functions
+
 ```bash
 npm run deploy:functions     # Deploy functions to both environments
 npm run deploy:functions:dev # Deploy functions to dev
@@ -156,128 +227,232 @@ npm run build        # Build functions
 ```
 
 ### Firestore
+
 ```bash
 npm run update-local-index   # Download indexes from Firebase
 npm run update-remote-index  # Deploy indexes to Firebase
 npm run update-remote-rules  # Deploy security rules to Firebase
 ```
 
-## Project Structure
+## Project Structure (Hexagonal Architecture)
 
 ```
-├── .claude/                 # Claude Code agent configurations
-│   ├── agents/             # Specialized AI agents
+├── .claude/                      # Claude Code agent configurations
+│   ├── agents/                  # Specialized AI agents
 │   └── settings.local.json
-├── functions/              # Firebase Cloud Functions (backend)
+├── __tests__/                   # Architecture tests
+│   └── architecture/            # Architectural validation tests
+├── functions/                   # Firebase Cloud Functions (backend)
 │   └── src/
-│       └── index.ts       # Functions entry point
-├── public/                 # Static assets (robots.txt, sitemap.xml, etc.)
+│       └── index.ts            # Functions entry point
+├── public/                      # Static assets
 ├── src/
-│   ├── app/               # Next.js App Router pages (client-side only)
-│   │   ├── layout.tsx    # Root layout with providers
-│   │   ├── page.tsx      # Landing page with auth
-│   │   ├── dashboard/    # Protected dashboard
-│   │   └── globals.css   # Global styles
-│   ├── components/        # React components (all client-side)
-│   │   ├── ui/           # Reusable UI components
-│   │   │   ├── button.tsx
-│   │   │   ├── input.tsx
-│   │   │   ├── card.tsx
-│   │   │   ├── toast.tsx
-│   │   │   └── error-boundary.tsx
-│   │   ├── auth/         # Authentication components
-│   │   │   ├── sign-in-form.tsx
-│   │   │   ├── sign-up-form.tsx
-│   │   │   └── protected-route.tsx
-│   │   ├── layout/       # Layout components
-│   │   │   └── navbar.tsx
-│   │   └── __tests__/    # Component tests
-│   ├── hooks/            # Custom React hooks
-│   │   └── useAuth.ts   # Firebase auth hook
-│   ├── lib/              # Utility functions and services
-│   │   ├── env.ts       # Environment variable validation
-│   │   ├── firebase.ts  # Firebase client initialization
-│   │   ├── utils.ts     # Common utilities
-│   │   └── __tests__/   # Test files
-│   └── types/           # TypeScript type definitions
+│   ├── app/                    # Next.js App Router (Primary Adapters)
+│   │   ├── layout.tsx          # Root layout
+│   │   ├── page.tsx            # Home page
+│   │   └── globals.css         # Global styles
+│   ├── components/             # React components (Primary Adapters)
+│   ├── domain/                 # DOMAIN LAYER (Core Business Logic)
+│   │   ├── models/             # Domain entities (User, Post, etc.)
+│   │   ├── ports/              # Port interfaces (contracts)
+│   │   └── services/           # Domain services
+│   ├── application/            # APPLICATION LAYER
+│   │   ├── use-cases/          # Business use cases
+│   │   └── services/           # Application services
+│   ├── adapters/               # ADAPTER LAYER (Secondary Adapters)
+│   │   └── baas/               # BAAS provider adapters
+│   │       ├── firebase/       # Firebase implementations
+│   │       │   ├── firebase-auth.adapter.ts
+│   │       │   ├── firebase-database.adapter.ts
+│   │       │   ├── firebase-storage.adapter.ts
+│   │       │   └── firebase-messaging.adapter.ts
+│   │       ├── aws/            # AWS Amplify (future)
+│   │       ├── supabase/       # Supabase (future)
+│   │       └── factory.ts      # Adapter factory
+│   ├── hooks/                  # Custom React hooks
+│   │   └── useAuth.ts          # Auth hook (uses ports)
+│   ├── lib/                    # Utilities and configuration
+│   │   ├── env.ts              # Environment validation
+│   │   ├── firebase.ts         # Firebase initialization
+│   │   ├── utils.ts            # Utility functions
+│   │   └── __tests__/          # Test files
+│   └── types/                  # TypeScript types
+├── ARCHITECTURE.md              # Architecture documentation
+├── CLAUDE.md                    # AI assistant guidelines
+├── BAAS_CONFIGURATION.md        # BAAS provider configuration guide
 ├── .env.development.example
 ├── .env.production.example
-├── firebase.json         # Firebase configuration
-├── .firebaserc          # Firebase projects
-├── firestore.rules      # Firestore security rules
-├── firestore.indexes.json # Firestore indexes
-├── next.config.ts       # Next.js configuration (static export)
-├── tsconfig.json        # TypeScript configuration
-├── eslint.config.mjs    # ESLint configuration
-├── .prettierrc          # Prettier configuration
-├── jest.config.js       # Jest configuration
+├── firebase.json                # Firebase configuration
+├── next.config.ts               # Next.js configuration
 └── package.json
 ```
 
-## What's New in This Version
+## Architecture Documentation
 
-This template has been significantly enhanced to provide a production-ready foundation:
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Detailed architecture overview, data flow, and design decisions
+- **[CLAUDE.md](./CLAUDE.md)** - Guidelines for AI assistants working on this codebase
+- **[BAAS_CONFIGURATION.md](./BAAS_CONFIGURATION.md)** - Guide to configuring and switching BAAS providers
 
-### 🎨 Complete UI Component Library
-- Pre-built Button, Input, Card components with variants
-- Toast notification system for user feedback
-- Error boundary for graceful error handling
-- Fully responsive and accessible components
+## Using the Architecture
 
-### 🔐 Ready-to-Use Authentication
-- Sign-in and sign-up forms with validation
-- Protected route wrapper for secure pages
-- Responsive navigation with user state
-- Dashboard page for authenticated users
-- Comprehensive error messages for better UX
-
-### 🔒 Enhanced Security
-- All dependencies updated to fix vulnerabilities
-- Improved Firestore security rules with examples
-- CodeQL security scanning passed
-- Input validation on all forms
-- Proper error handling throughout
-
-### 🧪 Comprehensive Testing
-- Component tests for all UI components
-- 31 passing tests out of the box
-- React Testing Library integration
-- Easy to extend with your own tests
-
-### 📱 Better User Experience
-- Beautiful landing page with feature showcase
-- Smooth loading states and transitions
-- Toast notifications for actions
-- Responsive design for all screen sizes
-- Dark mode support via CSS variables
-
-## Firebase Services
-
-### Authentication
-
-Authentication is configured and ready to use. Import from `@/lib/firebase`:
+### Working with Authentication
 
 ```typescript
-import { auth } from "@/lib/firebase";
+// ✅ CORRECT: Use adapter via factory (provider-agnostic)
+import { getAuthAdapter } from "@/adapters/baas/factory";
+import { LoginUseCase } from "@/application/use-cases/login.use-case";
+
+const authAdapter = getAuthAdapter();
+const loginUseCase = new LoginUseCase(authAdapter);
+await loginUseCase.execute({ email, password });
+
+// ❌ WRONG: Direct Firebase import (couples to provider)
 import { signInWithEmailAndPassword } from "firebase/auth";
 ```
 
-### Firestore Database
-
-Firestore is initialized and ready. Security rules are in `firestore.rules`:
+### Working with Database
 
 ```typescript
-import { db } from "@/lib/firebase";
-import { collection, addDoc } from "firebase/firestore";
+// ✅ CORRECT: Use adapter via factory
+import { getDatabaseAdapter } from "@/adapters/baas/factory";
+
+const db = getDatabaseAdapter<Post>();
+const posts = await db.findMany("posts", [
+  { field: "authorId", operator: "==", value: userId },
+]);
+
+// ❌ WRONG: Direct Firestore import
+import { collection, query, where, getDocs } from "firebase/firestore";
 ```
 
-### Cloud Functions
+### Creating Custom Hooks
 
-Example functions are in `functions/src/index.ts`:
-- HTTP function
-- Firestore trigger
-- Scheduled function
-- Callable function
+```typescript
+// Custom hook using the adapter pattern
+import { getAuthAdapter } from "@/adapters/baas/factory";
+
+export function useAuth() {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const authAdapter = getAuthAdapter();
+    return authAdapter.onAuthStateChanged(setUser);
+  }, []);
+
+  return { user };
+}
+```
+
+## BAAS Services (Provider-Agnostic)
+
+## BAAS Services (Provider-Agnostic)
+
+All BAAS services are accessed through port interfaces, making them provider-agnostic.
+
+### Authentication
+
+```typescript
+import { getAuthAdapter } from "@/adapters/baas/factory";
+
+const auth = getAuthAdapter();
+
+// Sign in
+const user = await auth.signIn({ email, password });
+
+// Sign up
+const newUser = await auth.signUp({ email, password });
+
+// Sign out
+await auth.signOut();
+
+// Listen to auth state
+const unsubscribe = auth.onAuthStateChanged(user => {
+  console.log("User:", user);
+});
+```
+
+### Database (Firestore/DynamoDB/PostgreSQL)
+
+```typescript
+import { getDatabaseAdapter } from "@/adapters/baas/factory";
+
+const db = getDatabaseAdapter<YourType>();
+
+// Create document
+const id = await db.create("collection", { name: "Item" });
+
+// Find by ID
+const item = await db.findById("collection", id);
+
+// Query documents
+const items = await db.findMany("collection", [
+  { field: "status", operator: "==", value: "active" },
+]);
+
+// Update
+await db.update("collection", id, { name: "Updated" });
+
+// Delete
+await db.delete("collection", id);
+
+// Real-time subscription
+const unsubscribe = db.subscribe("collection", undefined, data => {
+  console.log("Data updated:", data);
+});
+```
+
+### Storage
+
+```typescript
+import { getStorageAdapter } from "@/adapters/baas/factory";
+
+const storage = getStorageAdapter();
+
+// Upload file
+const url = await storage.upload("path/to/file.jpg", file);
+
+// Get download URL
+const downloadUrl = await storage.getDownloadURL("path/to/file.jpg");
+
+// Delete file
+await storage.delete("path/to/file.jpg");
+```
+
+### Messaging (Push Notifications)
+
+```typescript
+import { getMessagingAdapter } from "@/adapters/baas/factory";
+
+const messaging = getMessagingAdapter();
+
+// Request permission and get token
+const token = await messaging.requestPermission();
+
+// Listen for messages
+const unsubscribe = messaging.onMessage(payload => {
+  console.log("Message received:", payload);
+});
+```
+
+## Switching BAAS Providers
+
+To switch from Firebase to another provider (e.g., AWS Amplify):
+
+1. **Set environment variable:**
+
+```bash
+NEXT_PUBLIC_BAAS_PROVIDER=aws
+```
+
+2. **Implement AWS adapters** (or use existing ones)
+
+3. **Configure AWS credentials** in `.env`
+
+4. **No code changes needed** - your application continues to work!
+
+See [BAAS_CONFIGURATION.md](./BAAS_CONFIGURATION.md) for detailed instructions.
+
+## Firebase-Specific Setup (Current Default)
 
 ### Storage
 
@@ -312,6 +487,7 @@ Use agents in Claude Code by typing `/` to see available agents.
 ## Environment Variables
 
 ### Development (.env.development)
+
 ```env
 PHASE=development
 NEXT_PUBLIC_FIREBASE_API_KEY=...
@@ -325,29 +501,34 @@ NEXT_FIREBASE_MESSAGING_VAPID=...
 ```
 
 ### Production (.env.production)
+
 Same variables but with production values.
 
 ## Best Practices
 
 ### Security
+
 - Never commit `.env.development` or `.env.production` files
 - Review and test Firestore security rules thoroughly
 - Use environment variables for sensitive data
 - Enable Firebase App Check for production
 
 ### Code Quality
+
 - Run `npm run lint` before committing
 - Run `npm run format` to maintain consistent style
 - Write tests for critical functionality
 - Use TypeScript strictly
 
 ### Firebase
+
 - Test with Firebase emulators during development
 - Use separate dev/prod environments
 - Monitor Firebase usage and costs
 - Set up Firebase budget alerts
 
 ### Deployment
+
 - Test thoroughly in development before deploying to production
 - Review security rules before deploying
 - Monitor deployments for errors
@@ -383,16 +564,19 @@ Edit `src/app/globals.css` to customize Tailwind CSS variables and add custom st
 ## Troubleshooting
 
 ### Build Errors
+
 - Ensure all environment variables are set
 - Check TypeScript errors with `npx tsc --noEmit`
 - Clear Next.js cache: `rm -rf .next`
 
 ### Firebase Errors
+
 - Verify Firebase credentials in `.env` files
 - Check Firebase project IDs in `.firebaserc`
 - Ensure Firebase CLI is logged in: `firebase login`
 
 ### Deployment Issues
+
 - Check Firebase hosting configuration in `firebase.json`
 - Verify build completes successfully: `npm run build`
 - Check Firebase console for deployment logs
@@ -404,4 +588,5 @@ This is a template repository. Fork it and customize it for your needs!
 ## License
 
 MIT License - feel free to use this template for any project.
+
 # side-project-template

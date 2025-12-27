@@ -37,11 +37,11 @@ export function useFirestoreDoc<T = DocumentData>(
     const fetchDoc = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const docRef = doc(db, collectionName, docId);
         const docSnap = await getDoc(docRef);
-        
+
         if (docSnap.exists()) {
           setData({ id: docSnap.id, ...docSnap.data() } as T);
         } else {
@@ -82,19 +82,20 @@ export function useFirestoreCollection<T = DocumentData>(
     const fetchCollection = async () => {
       setLoading(true);
       setError(null);
-      
+
       try {
         const collectionRef = collection(db, collectionName);
-        const q = constraints.length > 0 
-          ? query(collectionRef, ...constraints) 
-          : collectionRef;
-        
+        const q =
+          constraints.length > 0
+            ? query(collectionRef, ...constraints)
+            : collectionRef;
+
         const querySnapshot = await getDocs(q);
-        const docs = querySnapshot.docs.map((doc) => ({
+        const docs = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data(),
         })) as T[];
-        
+
         setData(docs);
       } catch (err) {
         setError(err as FirestoreError);
@@ -119,7 +120,7 @@ export function useFirestore<T = DocumentData>(collectionName: string) {
   const add = async (data: Partial<T>) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const collectionRef = collection(db, collectionName);
       const docRef = await addDoc(collectionRef, {
@@ -138,7 +139,7 @@ export function useFirestore<T = DocumentData>(collectionName: string) {
   const update = async (docId: string, data: Partial<T>) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const docRef = doc(db, collectionName, docId);
       await updateDoc(docRef, {
@@ -156,7 +157,7 @@ export function useFirestore<T = DocumentData>(collectionName: string) {
   const remove = async (docId: string) => {
     setLoading(true);
     setError(null);
-    
+
     try {
       const docRef = doc(db, collectionName, docId);
       await deleteDoc(docRef);

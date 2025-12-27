@@ -106,8 +106,8 @@ export function isProduction(): boolean {
 }
 
 // Validate environment variables at module load time (build time)
-if (typeof window === "undefined") {
-  // Only validate on the server side
+if (typeof window === "undefined" && process.env.NODE_ENV !== "test") {
+  // Only validate on the server side, skip during tests
   try {
     validateEnv();
   } catch (error) {

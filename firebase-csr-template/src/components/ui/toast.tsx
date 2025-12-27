@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, ReactNode, useEffect, useRef } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+  useEffect,
+  useRef,
+} from "react";
 import { cn } from "@/lib/utils";
 import { generateId } from "@/lib/utils";
 
@@ -26,27 +34,27 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     // Cleanup all timeouts on unmount
     const timeouts = timeoutsRef.current;
     return () => {
-      timeouts.forEach((timeout) => clearTimeout(timeout));
+      timeouts.forEach(timeout => clearTimeout(timeout));
       timeouts.clear();
     };
   }, []);
 
   const showToast = useCallback((message: string, type: ToastType = "info") => {
     const id = generateId(12);
-    setToasts((prev) => [...prev, { id, message, type }]);
+    setToasts(prev => [...prev, { id, message, type }]);
 
     // Auto dismiss after 5 seconds
     const timeout = setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+      setToasts(prev => prev.filter(toast => toast.id !== id));
       timeoutsRef.current.delete(id);
     }, 5000);
-    
+
     timeoutsRef.current.set(id, timeout);
   }, []);
 
   const dismissToast = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    
+    setToasts(prev => prev.filter(toast => toast.id !== id));
+
     // Clear the timeout if manually dismissed
     const timeout = timeoutsRef.current.get(id);
     if (timeout) {
@@ -59,7 +67,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
       <div className="pointer-events-none fixed bottom-0 right-0 z-50 flex flex-col gap-2 p-4 sm:p-6">
-        {toasts.map((toast) => (
+        {toasts.map(toast => (
           <div
             key={toast.id}
             className={cn(

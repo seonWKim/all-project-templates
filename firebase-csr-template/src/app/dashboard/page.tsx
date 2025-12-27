@@ -3,7 +3,13 @@
 import { ProtectedRoute } from "@/components/auth/protected-route";
 import { Navbar } from "@/components/layout/navbar";
 import { useAuth } from "@/hooks/useAuth";
-import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardDescription,
+} from "@/components/ui/card";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -12,7 +18,7 @@ export default function DashboardPage() {
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
         <Navbar />
-        
+
         <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">
@@ -42,8 +48,12 @@ export default function DashboardPage() {
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-sm font-medium text-gray-500">User ID</dt>
-                    <dd className="text-sm text-gray-900 truncate">{user?.uid}</dd>
+                    <dt className="text-sm font-medium text-gray-500">
+                      User ID
+                    </dt>
+                    <dd className="text-sm text-gray-900 truncate">
+                      {user?.id}
+                    </dd>
                   </div>
                 </dl>
               </CardContent>
@@ -136,16 +146,28 @@ export default function DashboardPage() {
                     <h4 className="mb-2 font-medium">Project Structure</h4>
                     <ul className="space-y-1 text-sm text-gray-600">
                       <li>
-                        <code className="rounded bg-gray-100 px-1">src/app</code> - Pages and routes
+                        <code className="rounded bg-gray-100 px-1">
+                          src/app
+                        </code>{" "}
+                        - Pages and routes
                       </li>
                       <li>
-                        <code className="rounded bg-gray-100 px-1">src/components</code> - React components
+                        <code className="rounded bg-gray-100 px-1">
+                          src/components
+                        </code>{" "}
+                        - React components
                       </li>
                       <li>
-                        <code className="rounded bg-gray-100 px-1">src/lib</code> - Utilities and services
+                        <code className="rounded bg-gray-100 px-1">
+                          src/lib
+                        </code>{" "}
+                        - Utilities and services
                       </li>
                       <li>
-                        <code className="rounded bg-gray-100 px-1">functions</code> - Cloud Functions
+                        <code className="rounded bg-gray-100 px-1">
+                          functions
+                        </code>{" "}
+                        - Cloud Functions
                       </li>
                     </ul>
                   </div>

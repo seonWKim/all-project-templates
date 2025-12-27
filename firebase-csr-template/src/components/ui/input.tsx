@@ -17,7 +17,7 @@ function sanitizeId(text: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
-  
+
   // Fallback to a random ID if sanitization results in empty string
   return sanitized || `input-${generateId(8)}`;
 }

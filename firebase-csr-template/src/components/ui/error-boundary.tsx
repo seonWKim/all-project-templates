@@ -41,7 +41,9 @@ export class ErrorBoundary extends Component<
         <div className="flex min-h-screen items-center justify-center p-4">
           <Card className="w-full max-w-md">
             <CardHeader>
-              <CardTitle className="text-red-600">Something went wrong</CardTitle>
+              <CardTitle className="text-red-600">
+                Something went wrong
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="mb-4 text-gray-600">

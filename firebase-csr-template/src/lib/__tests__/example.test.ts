@@ -36,7 +36,7 @@ describe("Utility Functions", () => {
   });
 
   describe("debounce", () => {
-    it("should debounce function calls", (done) => {
+    it("should debounce function calls", done => {
       let callCount = 0;
       const debouncedFn = debounce(() => {
         callCount++;
