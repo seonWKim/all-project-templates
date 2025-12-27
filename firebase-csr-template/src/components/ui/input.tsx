@@ -8,9 +8,19 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
+/**
+ * Sanitize label text to create a valid HTML ID
+ */
+function sanitizeId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type = "text", label, error, id, ...props }, ref) => {
-    const inputId = id || label?.toLowerCase().replace(/\s+/g, "-");
+    const inputId = id || (label ? sanitizeId(label) : undefined);
 
     return (
       <div className="w-full">
