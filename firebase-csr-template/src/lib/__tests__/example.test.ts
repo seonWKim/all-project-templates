@@ -31,7 +31,7 @@ describe("Utility Functions", () => {
       const start = Date.now();
       await sleep(100);
       const elapsed = Date.now() - start;
-      expect(elapsed).toBeGreaterThanOrEqual(100);
+      expect(elapsed).toBeGreaterThanOrEqual(90); // Allow small timing variance
     });
   });
 

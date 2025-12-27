@@ -1,19 +1,52 @@
 # Architecture Overview
 
-This document describes the architecture of the project template.
+This document describes the **Hexagonal Architecture** (Ports and Adapters) implementation of the Firebase CSR template.
+
+## Architecture Philosophy
+
+This template follows **Hexagonal Architecture** principles to achieve:
+- **BAAS Provider Independence**: Seamlessly switch between Firebase, AWS Amplify, Supabase, or other BAAS providers
+- **Testability**: Core business logic isolated from external dependencies
+- **Maintainability**: Clear separation of concerns with defined boundaries
+- **Extensibility**: Easy to add new features and integrations
+
+## Hexagonal Architecture Layers
+
+### 1. Domain Layer (Core)
+The innermost layer containing:
+- **Domain Models**: Pure business entities (User, Post, etc.)
+- **Domain Logic**: Business rules independent of frameworks
+- **Port Interfaces**: Contracts for external dependencies
+
+### 2. Application Layer
+Coordinates domain objects and implements use cases:
+- **Use Cases**: Application-specific business logic
+- **Application Services**: Orchestrate domain objects
+- **Port Definitions**: Input/output interfaces
+
+### 3. Adapter Layer
+Implements port interfaces for external systems:
+- **Primary Adapters** (Driving): UI components, API endpoints
+- **Secondary Adapters** (Driven): BAAS providers, storage, messaging
+- **Adapter Factory**: Creates appropriate adapter instances
+
+### 4. Infrastructure Layer
+Framework and tool-specific code:
+- Next.js configuration
+- Build tools
+- Deployment scripts
 
 ## Tech Stack
 
 - **Frontend**: Next.js 15 (App Router) + React + TypeScript (CSR/Static Export Only)
 - **Styling**: Tailwind CSS
-- **Backend**: Firebase
-  - Authentication (client-side SDK)
-  - Firestore Database (client-side SDK)
-  - Cloud Functions (backend services)
-  - Storage (client-side SDK)
-  - Cloud Messaging (client-side SDK)
-  - Hosting (static files)
-- **Testing**: Jest
+- **Backend**: Backend-as-a-Service (BAAS) - Currently Firebase
+  - Authentication (via adapter)
+  - Database (via adapter)
+  - Storage (via adapter)
+  - Messaging (via adapter)
+  - Hosting
+- **Testing**: Jest + Architecture Tests
 - **Code Quality**: ESLint + Prettier
 - **AI Assistance**: Claude Code with specialized agents
 
@@ -26,87 +59,186 @@ This template uses **Client-Side Rendering (CSR)** exclusively with Next.js stat
 - Firebase client SDKs handle all backend communication
 - Deployed as static files to Firebase Hosting
 
-## Directory Structure
+## Directory Structure (Hexagonal Architecture)
 
 ```
-├── .claude/                  # Claude Code configuration
-│   ├── agents/              # Specialized AI agents
-│   └── settings.local.json  # Local settings
-├── .github/                 # GitHub configuration
-│   └── workflows/           # CI/CD workflows
-├── functions/               # Firebase Cloud Functions
+├── .claude/                      # Claude Code configuration
+│   ├── agents/                  # Specialized AI agents
+│   └── settings.local.json      # Local settings
+├── .github/                     # GitHub configuration
+│   ├── workflows/               # CI/CD workflows
+│   └── PULL_REQUEST_TEMPLATE.md # PR guidelines with architecture checklist
+├── functions/                   # Firebase Cloud Functions (adapter layer)
 │   └── src/
-│       └── index.ts        # Functions entry point
-├── public/                  # Static assets
+│       └── index.ts            # Functions entry point
+├── public/                      # Static assets
 ├── src/
-│   ├── app/                # Next.js App Router
-│   │   ├── layout.tsx      # Root layout
-│   │   ├── page.tsx        # Home page
-│   │   ├── globals.css     # Global styles
-│   │   ├── api/            # API routes
-│   │   ├── robots.ts       # Robots.txt
-│   │   └── sitemap.ts      # Sitemap
-│   ├── components/         # React components
-│   │   └── providers/      # Context providers
-│   ├── contexts/           # React contexts
-│   ├── hooks/              # Custom hooks
-│   ├── lib/                # Utilities and services
-│   │   ├── firebase.ts     # Firebase initialization
-│   │   ├── utils.ts        # Utility functions
-│   │   └── __tests__/      # Test files
-│   └── types/              # TypeScript types
-├── firebase.json           # Firebase configuration
-├── .firebaserc             # Firebase projects
-├── firestore.rules         # Firestore security rules
-├── firestore.indexes.json  # Firestore indexes
-└── package.json            # Dependencies and scripts
+│   ├── app/                    # Next.js App Router (primary adapters)
+│   │   ├── layout.tsx          # Root layout
+│   │   ├── page.tsx            # Home page
+│   │   ├── globals.css         # Global styles
+│   │   ├── api/                # API routes
+│   │   ├── robots.ts           # Robots.txt
+│   │   └── sitemap.ts          # Sitemap
+│   ├── components/             # React components (primary adapters)
+│   │   └── providers/          # Context providers
+│   ├── domain/                 # DOMAIN LAYER
+│   │   ├── models/             # Pure domain entities
+│   │   ├── ports/              # Port interfaces (contracts)
+│   │   └── services/           # Domain logic/business rules
+│   ├── application/            # APPLICATION LAYER
+│   │   ├── use-cases/          # Application use cases
+│   │   └── services/           # Application services
+│   ├── adapters/               # ADAPTER LAYER
+│   │   ├── baas/               # BAAS provider adapters
+│   │   │   ├── firebase/       # Firebase implementation
+│   │   │   ├── aws/            # AWS Amplify implementation (future)
+│   │   │   ├── supabase/       # Supabase implementation (future)
+│   │   │   └── factory.ts      # Adapter factory
+│   │   └── storage/            # Storage adapters
+│   ├── hooks/                  # Custom hooks (using ports)
+│   ├── lib/                    # Utilities and configuration
+│   │   ├── config.ts           # BAAS configuration
+│   │   ├── utils.ts            # Utility functions
+│   │   └── __tests__/          # Test files
+│   └── types/                  # TypeScript types
+├── __tests__/                  # Architecture tests
+│   └── architecture/           # Architecture validation tests
+├── CLAUDE.md                   # Architectural guidelines for AI
+├── firebase.json               # Firebase configuration
+├── .firebaserc                 # Firebase projects
+├── firestore.rules             # Firestore security rules
+├── firestore.indexes.json      # Firestore indexes
+└── package.json                # Dependencies and scripts
 ```
 
-## Data Flow
+## Data Flow (Hexagonal Architecture)
 
-### Authentication Flow (Client-Side)
-
-```
-User → Browser (React) → Firebase Auth SDK → Firebase Auth Service
-                                           ↓
-                                    Cloud Functions (triggers)
-```
-
-1. User interacts with the UI in the browser
-2. React app calls Firebase Auth SDK methods (client-side)
-3. Firebase Auth SDK communicates with Firebase Auth Service
-4. User state updates in React app
-5. Protected routes check auth state in React
-6. Optional: Cloud Functions triggered on auth events (server-side)
-
-### Data Access Flow (Client-Side)
+### Primary Adapter → Application → Domain → Secondary Adapter Flow
 
 ```
-User → Browser (React) → Firestore SDK → Security Rules → Firestore Database
-                                                        ↓
-                                                 Cloud Functions (triggers)
+UI Component (Primary Adapter)
+    ↓
+Use Case (Application Layer)
+    ↓
+Domain Service (Domain Layer)
+    ↓
+Port Interface (Domain Layer)
+    ↓
+BAAS Adapter (Secondary Adapter - e.g., Firebase)
+    ↓
+External Service (Firebase/AWS/etc.)
 ```
 
-1. User requests data through the UI
-2. React app queries Firestore SDK directly (client-side)
-3. Firestore security rules validate access (server-side)
-4. Data returned to browser
-5. React app updates UI
-6. Optional: Cloud Functions triggered on data changes (server-side)
-
-### Cloud Functions Communication
+### Example: Authentication Flow
 
 ```
-Browser (React) → Firebase Callable Functions → Cloud Function
-                                              ↓
-                                       Firebase Services
+Login Component
+    ↓ calls
+AuthUseCase.login(email, password)
+    ↓ uses
+AuthPort.authenticate(credentials)
+    ↓ implemented by
+FirebaseAuthAdapter.authenticate(credentials)
+    ↓ calls
+Firebase Auth SDK
 ```
 
-1. React app calls Firebase callable function
-2. Cloud Function processes request with backend logic
-3. Cloud Function accesses Firebase services with admin privileges
-4. Response returned to browser
-5. React app handles response
+### Example: Data Access Flow
+
+```
+User Profile Component
+    ↓ calls
+UserUseCase.getUserProfile(userId)
+    ↓ uses
+UserPort.findById(userId)
+    ↓ implemented by
+FirebaseDatabaseAdapter.findById(userId)
+    ↓ calls
+Firestore SDK
+```
+
+## BAAS Provider Abstraction
+
+### Supported BAAS Providers
+
+This architecture supports multiple BAAS providers through the adapter pattern:
+
+1. **Firebase** (Current Default)
+   - Authentication, Firestore, Storage, Cloud Messaging, Functions
+2. **AWS Amplify** (Future)
+   - Cognito, DynamoDB, S3, SNS, Lambda
+3. **Supabase** (Future)
+   - Auth, PostgreSQL, Storage, Realtime
+4. **Custom/Other** (Extensible)
+   - Any BAAS that implements the port interfaces
+
+### Switching BAAS Providers
+
+To switch BAAS providers:
+
+1. **Configuration**: Update `src/lib/config.ts` to specify the provider
+2. **Adapter**: Ensure the adapter for the provider exists in `src/adapters/baas/`
+3. **Environment Variables**: Update `.env` with provider-specific credentials
+4. **Dependencies**: Install provider-specific SDKs
+
+Example configuration:
+
+```typescript
+// src/lib/config.ts
+export const baasConfig = {
+  provider: 'firebase', // or 'aws', 'supabase'
+  // provider-specific config
+};
+```
+
+The adapter factory automatically instantiates the correct adapter based on configuration.
+
+### Port Interfaces (Contracts)
+
+All BAAS adapters must implement these port interfaces:
+
+#### AuthPort
+```typescript
+interface AuthPort {
+  signIn(email: string, password: string): Promise<User>;
+  signUp(email: string, password: string): Promise<User>;
+  signOut(): Promise<void>;
+  getCurrentUser(): Promise<User | null>;
+  onAuthStateChanged(callback: (user: User | null) => void): () => void;
+}
+```
+
+#### DatabasePort
+```typescript
+interface DatabasePort<T> {
+  create(collection: string, data: T): Promise<string>;
+  findById(collection: string, id: string): Promise<T | null>;
+  findMany(collection: string, query?: Query): Promise<T[]>;
+  update(collection: string, id: string, data: Partial<T>): Promise<void>;
+  delete(collection: string, id: string): Promise<void>;
+  subscribe(collection: string, callback: (data: T[]) => void): () => void;
+}
+```
+
+#### StoragePort
+```typescript
+interface StoragePort {
+  upload(path: string, file: File): Promise<string>;
+  download(path: string): Promise<Blob>;
+  delete(path: string): Promise<void>;
+  getDownloadURL(path: string): Promise<string>;
+}
+```
+
+#### MessagingPort
+```typescript
+interface MessagingPort {
+  requestPermission(): Promise<string>;
+  onMessage(callback: (payload: any) => void): () => void;
+  subscribeToTopic(topic: string): Promise<void>;
+}
+```
 
 ## Firebase Services
 
@@ -218,26 +350,37 @@ Browser (React) → Firebase Callable Functions → Cloud Function
 
 ## Testing Strategy
 
+### Architecture Tests
+
+Validates adherence to hexagonal architecture principles:
+
+```typescript
+// __tests__/architecture/dependency-rules.test.ts
+// Ensures domain layer has no dependencies on adapters
+// Ensures adapters depend only on ports, not concrete implementations
+// Validates unidirectional dependency flow
+```
+
 ### Unit Tests
 
+- Test domain logic in isolation
+- Test use cases with mocked ports
 - Test utility functions
-- Test custom hooks
-- Test Firebase service wrappers
-- Mock Firebase SDK in tests
+- Mock BAAS adapters in tests
 
 ### Integration Tests
 
-- Test API routes
-- Test Firebase interactions
-- Test auth flows
+- Test adapter implementations
+- Test use cases with real adapters (test environment)
+- Test authentication flows
 - Test data operations
 
 ### End-to-End Tests
 
 - Test user flows
-- Test authentication
-- Test CRUD operations
-- Test error scenarios
+- Test complete feature scenarios
+- Test error handling
+- Test across different BAAS providers (if applicable)
 
 ## Deployment
 
@@ -266,6 +409,13 @@ Browser (React) → Firebase Callable Functions → Cloud Function
 - Rollback capability
 
 ## Scalability Considerations
+
+### Architecture Scalability
+
+- **Provider Independence**: Switch BAAS providers without changing business logic
+- **Adapter Pattern**: Add new adapters for new providers
+- **Port Interfaces**: Standardized contracts enable interoperability
+- **Domain Isolation**: Business logic can scale independently
 
 ### Database
 

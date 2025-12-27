@@ -7,13 +7,13 @@ import { env } from "./env";
 
 // Firebase configuration using centralized env utility
 const firebaseConfig = {
-  apiKey: env.firebase.apiKey(),
-  authDomain: env.firebase.authDomain(),
-  projectId: env.firebase.projectId(),
-  storageBucket: env.firebase.storageBucket(),
-  messagingSenderId: env.firebase.messagingSenderId(),
-  appId: env.firebase.appId(),
-  measurementId: env.firebase.measurementId(),
+  apiKey: env.firebase.apiKey,
+  authDomain: env.firebase.authDomain,
+  projectId: env.firebase.projectId,
+  storageBucket: env.firebase.storageBucket,
+  messagingSenderId: env.firebase.messagingSenderId,
+  appId: env.firebase.appId,
+  measurementId: env.firebase.measurementId,
 };
 
 // Initialize Firebase
