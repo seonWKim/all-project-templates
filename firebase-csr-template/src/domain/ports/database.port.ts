@@ -1,13 +1,13 @@
 /**
  * Port Interface: Database
- * 
+ *
  * Defines the contract for database operations.
  * Generic interface that works with any document/object database.
  */
 
 export interface Query {
   field: string;
-  operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'array-contains';
+  operator: "==" | "!=" | ">" | ">=" | "<" | "<=" | "in" | "array-contains";
   value: unknown;
 }
 
@@ -15,7 +15,7 @@ export interface DatabasePort<T = Record<string, unknown>> {
   /**
    * Create a new document in a collection
    */
-  create(collection: string, data: Omit<T, 'id'>): Promise<string>;
+  create(collection: string, data: Omit<T, "id">): Promise<string>;
 
   /**
    * Find a document by ID
@@ -41,15 +41,21 @@ export interface DatabasePort<T = Record<string, unknown>> {
    * Subscribe to real-time updates
    * @returns Unsubscribe function
    */
-  subscribe(collection: string, queries: Query[] | undefined, callback: (data: T[]) => void): () => void;
+  subscribe(
+    collection: string,
+    queries: Query[] | undefined,
+    callback: (data: T[]) => void
+  ): () => void;
 
   /**
    * Batch write operations
    */
-  batchWrite(operations: Array<{ 
-    type: 'create' | 'update' | 'delete'; 
-    collection: string; 
-    id?: string; 
-    data?: Partial<T>
-  }>): Promise<void>;
+  batchWrite(
+    operations: Array<{
+      type: "create" | "update" | "delete";
+      collection: string;
+      id?: string;
+      data?: Partial<T>;
+    }>
+  ): Promise<void>;
 }

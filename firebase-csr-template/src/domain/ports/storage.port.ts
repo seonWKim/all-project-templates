@@ -1,6 +1,6 @@
 /**
  * Port Interface: Storage
- * 
+ *
  * Defines the contract for file storage operations.
  */
 
@@ -9,7 +9,11 @@ export interface StoragePort {
    * Upload a file
    * @returns Download URL of uploaded file
    */
-  upload(path: string, file: File, metadata?: Record<string, string>): Promise<string>;
+  upload(
+    path: string,
+    file: File,
+    metadata?: Record<string, string>
+  ): Promise<string>;
 
   /**
    * Download a file
@@ -29,5 +33,7 @@ export interface StoragePort {
   /**
    * List files in a directory
    */
-  listFiles(path: string): Promise<Array<{ name: string; fullPath: string; size: number }>>;
+  listFiles(
+    path: string
+  ): Promise<Array<{ name: string; fullPath: string; size: number }>>;
 }

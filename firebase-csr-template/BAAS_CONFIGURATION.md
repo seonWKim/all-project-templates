@@ -52,7 +52,7 @@ Create adapter files in `src/adapters/baas/{provider}/`:
 
 ```typescript
 // src/adapters/baas/aws/aws-auth.adapter.ts
-import { AuthPort } from '@/domain/ports';
+import { AuthPort } from "@/domain/ports";
 
 export class AWSAuthAdapter implements AuthPort {
   // Implement all AuthPort methods using AWS SDK
@@ -68,18 +68,18 @@ export class AWSAuthAdapter implements AuthPort {
 Update `src/adapters/baas/factory.ts`:
 
 ```typescript
-import { AWSAuthAdapter } from './aws/aws-auth.adapter';
+import { AWSAuthAdapter } from "./aws/aws-auth.adapter";
 
 export function createAuthAdapter(config?: BaasConfig): AuthPort {
   const baasConfig = config || getBaasConfig();
-  
+
   switch (baasConfig.provider) {
-    case 'firebase':
+    case "firebase":
       return new FirebaseAuthAdapter();
-    case 'aws':
+    case "aws":
       return new AWSAuthAdapter(); // Add this
-    case 'supabase':
-      throw new Error('Supabase adapter not yet implemented');
+    case "supabase":
+      throw new Error("Supabase adapter not yet implemented");
     default:
       throw new Error(`Unknown BAAS provider: ${baasConfig.provider}`);
   }
@@ -139,6 +139,7 @@ const useCase = new LoginUseCase(mockAuthPort);
 ### 3. Gradual Migration
 
 Switch providers incrementally:
+
 - Start with Firebase
 - Implement AWS adapters
 - Test in parallel
@@ -150,14 +151,14 @@ Here's a complete example of implementing an AWS Amplify authentication adapter:
 
 ```typescript
 // src/adapters/baas/aws/aws-auth.adapter.ts
-import { Auth } from 'aws-amplify';
-import { AuthPort } from '@/domain/ports';
-import { User, UserCredentials } from '@/domain/models/user.model';
+import { Auth } from "aws-amplify";
+import { AuthPort } from "@/domain/ports";
+import { User, UserCredentials } from "@/domain/models/user.model";
 
 export class AWSAuthAdapter implements AuthPort {
   async signIn(credentials: UserCredentials): Promise<User> {
     const cognitoUser = await Auth.signIn(
-      credentials.email, 
+      credentials.email,
       credentials.password
     );
     return this.mapCognitoUserToDomain(cognitoUser);
@@ -187,16 +188,16 @@ export class AWSAuthAdapter implements AuthPort {
   onAuthStateChanged(callback: (user: User | null) => void): () => void {
     const hubListener = (data: any) => {
       switch (data.payload.event) {
-        case 'signIn':
-        case 'signOut':
+        case "signIn":
+        case "signOut":
           this.getCurrentUser().then(callback);
           break;
       }
     };
 
-    Hub.listen('auth', hubListener);
-    
-    return () => Hub.remove('auth', hubListener);
+    Hub.listen("auth", hubListener);
+
+    return () => Hub.remove("auth", hubListener);
   }
 
   async sendPasswordResetEmail(email: string): Promise<void> {
@@ -235,7 +236,7 @@ Never let provider-specific code leak into domain or application layers:
 
 ```typescript
 // ❌ BAD - Firebase in domain
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 interface User {
   createdAt: Timestamp; // Firebase-specific!
 }
@@ -296,6 +297,7 @@ Make sure `NEXT_PUBLIC_BAAS_PROVIDER` is set in your `.env` file and the provide
 ### Error: "Adapter not yet implemented"
 
 The selected provider hasn't been implemented. Either:
+
 1. Implement the adapter following this guide
 2. Switch back to Firebase (the default)
 

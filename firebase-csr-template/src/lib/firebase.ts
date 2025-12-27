@@ -32,7 +32,7 @@ export const storage: FirebaseStorage = getStorage(app);
 // Initialize Firebase Cloud Messaging (only in browser)
 let messaging: Messaging | null = null;
 if (typeof window !== "undefined") {
-  isSupported().then((supported) => {
+  isSupported().then(supported => {
     if (supported) {
       messaging = getMessaging(app);
     }

@@ -5,6 +5,7 @@ This document describes the **Hexagonal Architecture** (Ports and Adapters) impl
 ## Architecture Philosophy
 
 This template follows **Hexagonal Architecture** principles to achieve:
+
 - **BAAS Provider Independence**: Seamlessly switch between Firebase, AWS Amplify, Supabase, or other BAAS providers
 - **Testability**: Core business logic isolated from external dependencies
 - **Maintainability**: Clear separation of concerns with defined boundaries
@@ -13,25 +14,33 @@ This template follows **Hexagonal Architecture** principles to achieve:
 ## Hexagonal Architecture Layers
 
 ### 1. Domain Layer (Core)
+
 The innermost layer containing:
+
 - **Domain Models**: Pure business entities (User, Post, etc.)
 - **Domain Logic**: Business rules independent of frameworks
 - **Port Interfaces**: Contracts for external dependencies
 
 ### 2. Application Layer
+
 Coordinates domain objects and implements use cases:
+
 - **Use Cases**: Application-specific business logic
 - **Application Services**: Orchestrate domain objects
 - **Port Definitions**: Input/output interfaces
 
 ### 3. Adapter Layer
+
 Implements port interfaces for external systems:
+
 - **Primary Adapters** (Driving): UI components, API endpoints
 - **Secondary Adapters** (Driven): BAAS providers, storage, messaging
 - **Adapter Factory**: Creates appropriate adapter instances
 
 ### 4. Infrastructure Layer
+
 Framework and tool-specific code:
+
 - Next.js configuration
 - Build tools
 - Deployment scripts
@@ -53,6 +62,7 @@ Framework and tool-specific code:
 ## Rendering Strategy
 
 This template uses **Client-Side Rendering (CSR)** exclusively with Next.js static export:
+
 - All pages are pre-built as static HTML/CSS/JS
 - No server-side rendering (SSR) or API routes
 - All dynamic functionality runs in the browser
@@ -187,7 +197,7 @@ Example configuration:
 ```typescript
 // src/lib/config.ts
 export const baasConfig = {
-  provider: 'firebase', // or 'aws', 'supabase'
+  provider: "firebase", // or 'aws', 'supabase'
   // provider-specific config
 };
 ```
@@ -199,6 +209,7 @@ The adapter factory automatically instantiates the correct adapter based on conf
 All BAAS adapters must implement these port interfaces:
 
 #### AuthPort
+
 ```typescript
 interface AuthPort {
   signIn(email: string, password: string): Promise<User>;
@@ -210,6 +221,7 @@ interface AuthPort {
 ```
 
 #### DatabasePort
+
 ```typescript
 interface DatabasePort<T> {
   create(collection: string, data: T): Promise<string>;
@@ -222,6 +234,7 @@ interface DatabasePort<T> {
 ```
 
 #### StoragePort
+
 ```typescript
 interface StoragePort {
   upload(path: string, file: File): Promise<string>;
@@ -232,6 +245,7 @@ interface StoragePort {
 ```
 
 #### MessagingPort
+
 ```typescript
 interface MessagingPort {
   requestPermission(): Promise<string>;

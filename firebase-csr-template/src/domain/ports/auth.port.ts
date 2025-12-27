@@ -1,11 +1,11 @@
 /**
  * Port Interface: Authentication
- * 
+ *
  * Defines the contract for authentication services.
  * Any BAAS provider (Firebase, AWS, Supabase, etc.) must implement this interface.
  */
 
-import { User, UserCredentials } from '../models/user.model';
+import { User, UserCredentials } from "../models/user.model";
 
 export interface AuthPort {
   /**
@@ -42,7 +42,10 @@ export interface AuthPort {
   /**
    * Update user profile
    */
-  updateProfile(userId: string, profile: { displayName?: string; photoURL?: string }): Promise<void>;
+  updateProfile(
+    userId: string,
+    profile: { displayName?: string; photoURL?: string }
+  ): Promise<void>;
 
   /**
    * Delete user account

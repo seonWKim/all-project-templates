@@ -1,6 +1,6 @@
 /**
  * Firebase Storage Adapter
- * 
+ *
  * Implements StoragePort interface using Firebase Storage SDK.
  */
 
@@ -13,9 +13,9 @@ import {
   getMetadata,
   getBlob,
   UploadMetadata,
-} from 'firebase/storage';
-import { StoragePort } from '@/domain/ports';
-import { storage } from '@/lib/firebase';
+} from "firebase/storage";
+import { StoragePort } from "@/domain/ports";
+import { storage } from "@/lib/firebase";
 
 export class FirebaseStorageAdapter implements StoragePort {
   async upload(
@@ -27,7 +27,7 @@ export class FirebaseStorageAdapter implements StoragePort {
     const uploadMetadata: UploadMetadata | undefined = metadata
       ? { customMetadata: metadata }
       : undefined;
-    
+
     await uploadBytes(storageRef, file, uploadMetadata);
     return await this.getDownloadURL(path);
   }
@@ -52,9 +52,9 @@ export class FirebaseStorageAdapter implements StoragePort {
   ): Promise<Array<{ name: string; fullPath: string; size: number }>> {
     const storageRef = ref(storage, path);
     const result = await listAll(storageRef);
-    
+
     const filesWithMetadata = await Promise.all(
-      result.items.map(async (itemRef) => {
+      result.items.map(async itemRef => {
         const metadata = await getMetadata(itemRef);
         return {
           name: itemRef.name,
@@ -63,7 +63,7 @@ export class FirebaseStorageAdapter implements StoragePort {
         };
       })
     );
-    
+
     return filesWithMetadata;
   }
 }

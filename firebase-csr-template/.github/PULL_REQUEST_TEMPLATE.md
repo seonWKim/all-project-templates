@@ -28,30 +28,35 @@ Closes #(issue number)
 **For AI Reviewers and Human Maintainers**: Verify the following architectural constraints:
 
 ### Hexagonal Architecture Principles
+
 - [ ] Domain layer has no dependencies on adapters or frameworks
 - [ ] Business logic is isolated in domain/application layers
 - [ ] Port interfaces are used instead of concrete adapter implementations
 - [ ] Dependencies flow inward (UI → Application → Domain)
 
 ### BAAS Abstraction
+
 - [ ] No direct BAAS SDK imports in domain/application layers
 - [ ] New BAAS integrations implement required port interfaces
 - [ ] Adapters are properly registered in the factory
 - [ ] BAAS-specific code is contained within adapter layer
 
 ### Code Organization
+
 - [ ] Files are in correct architectural layer
 - [ ] New domain models are BAAS-independent
 - [ ] Use cases coordinate business operations
 - [ ] Components are thin and delegate to use cases
 
 ### Testing
+
 - [ ] Architectural tests pass and validate boundaries
 - [ ] Unit tests mock ports/adapters appropriately
 - [ ] New features have corresponding tests
 - [ ] No architectural violations introduced
 
 ### Documentation
+
 - [ ] ARCHITECTURE.md updated if structure changed
 - [ ] CLAUDE.md updated if patterns changed
 - [ ] Code comments added for complex logic
@@ -77,24 +82,28 @@ Describe the tests you ran and how to reproduce them:
 **For AI Assistants reviewing this PR**:
 
 ### Automated Checks
+
 1. **Dependency Direction**: Verify no domain/application imports from adapters
 2. **Port Compliance**: Check that adapters implement port interfaces correctly
 3. **Separation of Concerns**: Ensure business logic is not in UI components
-4. **Naming Conventions**: Validate file naming follows conventions (*.port.ts, *.adapter.ts, etc.)
+4. **Naming Conventions**: Validate file naming follows conventions (_.port.ts, _.adapter.ts, etc.)
 
 ### Code Quality Checks
+
 1. **Type Safety**: All functions have proper TypeScript types
 2. **Error Handling**: Appropriate error handling in use cases and adapters
 3. **Testing Coverage**: New code has corresponding tests
 4. **Documentation**: Complex logic is documented
 
 ### Architecture Review Questions
+
 - Does this change introduce coupling between layers?
 - Could this logic be reused if we switched BAAS providers?
 - Is the business logic testable without external dependencies?
 - Are there circular dependencies?
 
 ### Verification Steps for AI
+
 ```bash
 # 1. Check architectural integrity
 npm test -- architecture

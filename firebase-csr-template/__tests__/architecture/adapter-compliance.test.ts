@@ -1,15 +1,20 @@
 /**
  * Architectural Tests: Adapter Interchangeability
- * 
+ *
  * These tests validate that adapters correctly implement port interfaces
  * and can be swapped without breaking the system.
  */
 
-import { AuthPort, DatabasePort, StoragePort, MessagingPort } from '@/domain/ports';
+import {
+  AuthPort,
+  DatabasePort,
+  StoragePort,
+  MessagingPort,
+} from "@/domain/ports";
 
-describe('Hexagonal Architecture: Adapter Interchangeability', () => {
-  describe('Port Interface Contracts', () => {
-    it('AuthPort contract is correctly defined', () => {
+describe("Hexagonal Architecture: Adapter Interchangeability", () => {
+  describe("Port Interface Contracts", () => {
+    it("AuthPort contract is correctly defined", () => {
       // This test ensures the port interface has the right shape
       const mockAuthPort: AuthPort = {
         signIn: jest.fn(),
@@ -26,7 +31,7 @@ describe('Hexagonal Architecture: Adapter Interchangeability', () => {
       expect(Object.keys(mockAuthPort).length).toBeGreaterThanOrEqual(8);
     });
 
-    it('DatabasePort contract is correctly defined', () => {
+    it("DatabasePort contract is correctly defined", () => {
       const mockDatabasePort: DatabasePort = {
         create: jest.fn(),
         findById: jest.fn(),
@@ -41,7 +46,7 @@ describe('Hexagonal Architecture: Adapter Interchangeability', () => {
       expect(Object.keys(mockDatabasePort).length).toBeGreaterThanOrEqual(7);
     });
 
-    it('StoragePort contract is correctly defined', () => {
+    it("StoragePort contract is correctly defined", () => {
       const mockStoragePort: StoragePort = {
         upload: jest.fn(),
         download: jest.fn(),
@@ -54,7 +59,7 @@ describe('Hexagonal Architecture: Adapter Interchangeability', () => {
       expect(Object.keys(mockStoragePort).length).toBeGreaterThanOrEqual(5);
     });
 
-    it('MessagingPort contract is correctly defined', () => {
+    it("MessagingPort contract is correctly defined", () => {
       const mockMessagingPort: MessagingPort = {
         requestPermission: jest.fn(),
         getToken: jest.fn(),
@@ -68,40 +73,42 @@ describe('Hexagonal Architecture: Adapter Interchangeability', () => {
     });
   });
 
-  describe('Adapter Factory', () => {
-    it('factory exports correct functions', async () => {
-      const factory = await import('@/adapters/baas/factory');
-      
-      expect(typeof factory.createAuthAdapter).toBe('function');
-      expect(typeof factory.createDatabaseAdapter).toBe('function');
-      expect(typeof factory.createStorageAdapter).toBe('function');
-      expect(typeof factory.createMessagingAdapter).toBe('function');
-      expect(typeof factory.getAuthAdapter).toBe('function');
-      expect(typeof factory.getDatabaseAdapter).toBe('function');
-      expect(typeof factory.getStorageAdapter).toBe('function');
-      expect(typeof factory.getMessagingAdapter).toBe('function');
-      expect(typeof factory.getBaasConfig).toBe('function');
+  describe("Adapter Factory", () => {
+    it("factory exports correct functions", async () => {
+      const factory = await import("@/adapters/baas/factory");
+
+      expect(typeof factory.createAuthAdapter).toBe("function");
+      expect(typeof factory.createDatabaseAdapter).toBe("function");
+      expect(typeof factory.createStorageAdapter).toBe("function");
+      expect(typeof factory.createMessagingAdapter).toBe("function");
+      expect(typeof factory.getAuthAdapter).toBe("function");
+      expect(typeof factory.getDatabaseAdapter).toBe("function");
+      expect(typeof factory.getStorageAdapter).toBe("function");
+      expect(typeof factory.getMessagingAdapter).toBe("function");
+      expect(typeof factory.getBaasConfig).toBe("function");
     });
 
-    it('getBaasConfig returns valid configuration', async () => {
-      const { getBaasConfig } = await import('@/adapters/baas/factory');
-      
+    it("getBaasConfig returns valid configuration", async () => {
+      const { getBaasConfig } = await import("@/adapters/baas/factory");
+
       const config = getBaasConfig();
-      
+
       expect(config).toBeDefined();
       expect(config.provider).toBeDefined();
-      expect(['firebase', 'aws', 'supabase']).toContain(config.provider);
+      expect(["firebase", "aws", "supabase"]).toContain(config.provider);
     });
   });
 
-  describe('Use Case Dependencies', () => {
-    it('LoginUseCase depends on AuthPort, not concrete implementation', async () => {
-      const { LoginUseCase } = await import('@/application/use-cases/login.use-case');
-      
+  describe("Use Case Dependencies", () => {
+    it("LoginUseCase depends on AuthPort, not concrete implementation", async () => {
+      const { LoginUseCase } = await import(
+        "@/application/use-cases/login.use-case"
+      );
+
       const mockAuthPort: AuthPort = {
         signIn: jest.fn().mockResolvedValue({
-          id: '123',
-          email: 'test@example.com',
+          id: "123",
+          email: "test@example.com",
           createdAt: new Date(),
           updatedAt: new Date(),
         }),
@@ -116,9 +123,12 @@ describe('Hexagonal Architecture: Adapter Interchangeability', () => {
 
       const useCase = new LoginUseCase(mockAuthPort);
       expect(useCase).toBeDefined();
-      
+
       // Test that use case can work with mock (interface-based)
-      await useCase.execute({ email: 'test@example.com', password: 'password123' });
+      await useCase.execute({
+        email: "test@example.com",
+        password: "password123",
+      });
       expect(mockAuthPort.signIn).toHaveBeenCalled();
     });
   });

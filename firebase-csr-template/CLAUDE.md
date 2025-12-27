@@ -30,11 +30,13 @@ The architecture is designed to be BAAS-agnostic:
 **Rationale**: Enable seamless switching between BAAS providers (Firebase, AWS, Supabase)
 
 **Implementation**:
+
 - Define port interfaces in `src/domain/ports/`
 - Implement adapters in `src/adapters/baas/{provider}/`
 - Use factory pattern to instantiate correct adapter
 
 **When adding new features**:
+
 1. Define the port interface first
 2. Implement the adapter for current BAAS
 3. Use the port in application/domain layers
@@ -44,11 +46,13 @@ The architecture is designed to be BAAS-agnostic:
 **Rationale**: Business entities should not be coupled to database schemas
 
 **Implementation**:
+
 - Domain models in `src/domain/models/` are pure TypeScript interfaces
 - Adapters handle mapping between domain models and BAAS schemas
 - Never import BAAS SDKs in domain layer
 
 **When creating new models**:
+
 1. Define in domain layer with business properties only
 2. Create mapper functions in adapters for BAAS-specific transformations
 
@@ -57,11 +61,13 @@ The architecture is designed to be BAAS-agnostic:
 **Rationale**: Centralize application logic in testable, reusable use cases
 
 **Implementation**:
+
 - Use cases in `src/application/use-cases/`
 - Use cases depend on ports, not concrete implementations
 - Each use case represents a single business operation
 
 **When adding new features**:
+
 1. Create a use case that orchestrates the operation
 2. Inject required ports via constructor
 3. Keep use cases framework-agnostic
@@ -71,11 +77,13 @@ The architecture is designed to be BAAS-agnostic:
 **Rationale**: UI is just another adapter to the business logic
 
 **Implementation**:
+
 - Components call use cases, not BAAS SDKs directly
 - Keep components thin - delegate to use cases
 - Use custom hooks to bridge React and use cases
 
 **When creating new components**:
+
 1. Import use cases, not adapters
 2. Handle UI concerns only (rendering, events)
 3. Delegate business logic to use cases
@@ -85,12 +93,14 @@ The architecture is designed to be BAAS-agnostic:
 **Rationale**: Prevent architectural violations automatically
 
 **Implementation**:
+
 - Tests in `__tests__/architecture/`
 - Validate dependency directions
 - Ensure no circular dependencies
 - Check that domain has no adapter imports
 
 **Before committing code**:
+
 1. Run `npm test` to validate architecture
 2. Fix any architectural violations
 3. Update architectural tests if architecture evolves legitimately
@@ -102,6 +112,7 @@ The architecture is designed to be BAAS-agnostic:
 **Purpose**: Core business logic, completely independent
 
 **What belongs here**:
+
 - Domain models (User, Post, Order, etc.)
 - Port interfaces (AuthPort, DatabasePort, etc.)
 - Domain services (business rules)
@@ -109,6 +120,7 @@ The architecture is designed to be BAAS-agnostic:
 - Value objects
 
 **What does NOT belong here**:
+
 - Framework imports (React, Next.js)
 - BAAS SDK imports (Firebase, AWS)
 - HTTP libraries
@@ -119,12 +131,14 @@ The architecture is designed to be BAAS-agnostic:
 **Purpose**: Use cases and application services
 
 **What belongs here**:
+
 - Use cases (LoginUseCase, CreatePostUseCase)
 - Application services
 - DTOs (Data Transfer Objects)
 - Application events
 
 **What does NOT belong here**:
+
 - UI components
 - Direct BAAS SDK usage
 - Framework-specific code
@@ -134,12 +148,14 @@ The architecture is designed to be BAAS-agnostic:
 **Purpose**: Connect external world to business logic
 
 **What belongs here**:
+
 - BAAS adapters (Firebase, AWS, Supabase implementations)
 - HTTP clients
 - External service integrations
 - Mapper functions (domain ↔ external)
 
 **Structure**:
+
 ```
 adapters/
 ├── baas/
@@ -158,12 +174,14 @@ adapters/
 **Purpose**: UI layer (primary adapters)
 
 **What belongs here**:
+
 - React components
 - Next.js pages
 - UI logic (rendering, events)
 - Custom hooks (using use cases)
 
 **Best practices**:
+
 - Import use cases, not adapters
 - Keep components presentational
 - Extract logic to use cases or hooks
@@ -186,7 +204,7 @@ export interface Post {
 // 2. Define port interface
 // src/domain/ports/post.port.ts
 export interface PostPort {
-  create(post: Omit<Post, 'id'>): Promise<Post>;
+  create(post: Omit<Post, "id">): Promise<Post>;
   findById(id: string): Promise<Post | null>;
   findByAuthor(authorId: string): Promise<Post[]>;
 }
@@ -195,7 +213,7 @@ export interface PostPort {
 // src/application/use-cases/create-post.use-case.ts
 export class CreatePostUseCase {
   constructor(private postPort: PostPort) {}
-  
+
   async execute(data: CreatePostDTO): Promise<Post> {
     // Validate
     // Business logic
@@ -206,7 +224,7 @@ export class CreatePostUseCase {
 // 4. Implement adapter
 // src/adapters/baas/firebase/firebase-post.adapter.ts
 export class FirebasePostAdapter implements PostPort {
-  async create(post: Omit<Post, 'id'>): Promise<Post> {
+  async create(post: Omit<Post, "id">): Promise<Post> {
     // Firebase-specific implementation
   }
   // ... other methods
@@ -225,20 +243,20 @@ export default function CreatePostPage() {
 ```typescript
 // src/lib/config.ts
 export const config = {
-  baasProvider: process.env.NEXT_PUBLIC_BAAS_PROVIDER || 'firebase'
+  baasProvider: process.env.NEXT_PUBLIC_BAAS_PROVIDER || "firebase",
 };
 
 // src/adapters/baas/factory.ts
 export function createAuthAdapter(): AuthPort {
-  switch(config.baasProvider) {
-    case 'firebase':
+  switch (config.baasProvider) {
+    case "firebase":
       return new FirebaseAuthAdapter();
-    case 'aws':
+    case "aws":
       return new AWSAuthAdapter();
-    case 'supabase':
+    case "supabase":
       return new SupabaseAuthAdapter();
     default:
-      throw new Error('Unknown BAAS provider');
+      throw new Error("Unknown BAAS provider");
   }
 }
 
@@ -251,16 +269,16 @@ const loginUseCase = new LoginUseCase(authAdapter);
 
 ```typescript
 // __tests__/architecture/dependency-rules.test.ts
-describe('Architecture Rules', () => {
-  it('domain layer should not import from adapters', () => {
+describe("Architecture Rules", () => {
+  it("domain layer should not import from adapters", () => {
     // Use dependency cruiser or similar
     const domainFiles = getDomainFiles();
     domainFiles.forEach(file => {
-      expect(file).not.toImportFrom('adapters');
+      expect(file).not.toImportFrom("adapters");
     });
   });
-  
-  it('adapters should implement port interfaces', () => {
+
+  it("adapters should implement port interfaces", () => {
     // Validate all adapters implement correct interfaces
   });
 });
@@ -271,9 +289,10 @@ describe('Architecture Rules', () => {
 ### ❌ Pitfall 1: Importing Firebase Directly in Components
 
 **Bad**:
+
 ```typescript
 // components/UserProfile.tsx
-import { auth, db } from '@/lib/firebase';
+import { auth, db } from "@/lib/firebase";
 
 function UserProfile() {
   const user = await auth.currentUser;
@@ -282,6 +301,7 @@ function UserProfile() {
 ```
 
 **Good**:
+
 ```typescript
 // components/UserProfile.tsx
 function UserProfile() {
@@ -293,22 +313,24 @@ function UserProfile() {
 ### ❌ Pitfall 2: Business Logic in Components
 
 **Bad**:
+
 ```typescript
 function CreatePost() {
-  const handleSubmit = async (data) => {
+  const handleSubmit = async data => {
     // Validation logic
     // Business rules
-    const docRef = await addDoc(collection(db, 'posts'), data);
+    const docRef = await addDoc(collection(db, "posts"), data);
   };
 }
 ```
 
 **Good**:
+
 ```typescript
 function CreatePost() {
   const createPost = useCreatePost(); // Use case handles logic
-  
-  const handleSubmit = async (data) => {
+
+  const handleSubmit = async data => {
     await createPost.execute(data);
   };
 }
@@ -317,9 +339,10 @@ function CreatePost() {
 ### ❌ Pitfall 3: Domain Models Tied to BAAS Schema
 
 **Bad**:
+
 ```typescript
 // domain/models/user.model.ts
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from "firebase/firestore";
 
 interface User {
   id: string;
@@ -328,6 +351,7 @@ interface User {
 ```
 
 **Good**:
+
 ```typescript
 // domain/models/user.model.ts
 interface User {
@@ -339,7 +363,7 @@ interface User {
 function toDomain(firestoreUser: any): User {
   return {
     id: firestoreUser.id,
-    createdAt: firestoreUser.createdAt.toDate()
+    createdAt: firestoreUser.createdAt.toDate(),
   };
 }
 ```
@@ -347,9 +371,10 @@ function toDomain(firestoreUser: any): User {
 ### ❌ Pitfall 4: Skipping Port Interfaces
 
 **Bad**:
+
 ```typescript
 // application/use-cases/login.use-case.ts
-import { FirebaseAuthAdapter } from '@/adapters/baas/firebase';
+import { FirebaseAuthAdapter } from "@/adapters/baas/firebase";
 
 class LoginUseCase {
   constructor(private auth: FirebaseAuthAdapter) {} // Concrete!
@@ -357,9 +382,10 @@ class LoginUseCase {
 ```
 
 **Good**:
+
 ```typescript
 // application/use-cases/login.use-case.ts
-import { AuthPort } from '@/domain/ports';
+import { AuthPort } from "@/domain/ports";
 
 class LoginUseCase {
   constructor(private auth: AuthPort) {} // Interface!
@@ -383,6 +409,7 @@ class LoginUseCase {
 ### When Reviewing Pull Requests
 
 Use the PR template checklist to verify:
+
 - [ ] No domain layer dependencies on adapters
 - [ ] Port interfaces used instead of concrete implementations
 - [ ] New adapters implement required ports

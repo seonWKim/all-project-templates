@@ -6,7 +6,10 @@ export default function Home() {
       <main className="flex flex-col items-center gap-8">
         <h1 className="text-4xl font-bold">Welcome to Your Project</h1>
         <p className="text-lg text-gray-600">
-          Start by editing <code className="rounded bg-gray-100 px-2 py-1">src/app/page.tsx</code>
+          Start by editing{" "}
+          <code className="rounded bg-gray-100 px-2 py-1">
+            src/app/page.tsx
+          </code>
         </p>
       </main>
     </div>

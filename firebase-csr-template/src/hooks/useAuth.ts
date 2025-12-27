@@ -14,8 +14,8 @@ export function useAuth() {
 
   useEffect(() => {
     const authAdapter = getAuthAdapter();
-    
-    const unsubscribe = authAdapter.onAuthStateChanged((user) => {
+
+    const unsubscribe = authAdapter.onAuthStateChanged(user => {
       setUser(user);
       setLoading(false);
     });

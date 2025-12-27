@@ -56,6 +56,7 @@ This template follows **Hexagonal Architecture** principles:
 ```
 
 **Key Benefits:**
+
 - Switch BAAS providers via environment variable
 - Business logic independent of external services
 - Easy to test with mocked adapters
@@ -88,6 +89,7 @@ npm run setup
    - `your-project-prod` (production)
 
 2. Copy environment files:
+
 ```bash
 cp .env.development.example .env.development
 cp .env.production.example .env.production
@@ -96,6 +98,7 @@ cp .env.production.example .env.production
 3. Update `.env.development` and `.env.production` with your Firebase credentials
 
 4. Update `.firebaserc` with your project IDs:
+
 ```json
 {
   "projects": {
@@ -107,11 +110,13 @@ cp .env.production.example .env.production
 ```
 
 5. Login to Firebase:
+
 ```bash
 firebase login
 ```
 
 6. Initialize Firebase (optional - if you need to reconfigure):
+
 ```bash
 firebase init
 ```
@@ -119,6 +124,7 @@ firebase init
 ### 4. Update Project Names
 
 Update the following files with your project name:
+
 - `package.json` - Change `name` field
 - `template/src/app/layout.tsx` - Update metadata
 - `template/README.md` - Update project name
@@ -135,6 +141,7 @@ npm run dev
 ## Scripts
 
 ### Development
+
 ```bash
 npm run dev          # Start dev server with Turbopack
 npm run build        # Build for production
@@ -142,6 +149,7 @@ npm run start        # Serve production build locally
 ```
 
 ### Code Quality
+
 ```bash
 npm run lint         # Run ESLint
 npm run lint:fix     # Fix ESLint issues
@@ -150,6 +158,7 @@ npm run format:check # Check code formatting
 ```
 
 ### Testing
+
 ```bash
 npm test             # Run tests
 npm run test:watch   # Run tests in watch mode
@@ -157,6 +166,7 @@ npm run test:coverage # Run tests with coverage
 ```
 
 ### Deployment
+
 ```bash
 npm run deploy       # Deploy to both dev and prod
 npm run deploy:dev   # Deploy to development
@@ -164,6 +174,7 @@ npm run deploy:prod  # Deploy to production
 ```
 
 ### Firebase Functions
+
 ```bash
 npm run deploy:functions     # Deploy functions to both environments
 npm run deploy:functions:dev # Deploy functions to dev
@@ -176,6 +187,7 @@ npm run build        # Build functions
 ```
 
 ### Firestore
+
 ```bash
 npm run update-local-index   # Download indexes from Firebase
 npm run update-remote-index  # Deploy indexes to Firebase
@@ -247,46 +259,46 @@ npm run update-remote-rules  # Deploy security rules to Firebase
 
 ```typescript
 // ✅ CORRECT: Use adapter via factory (provider-agnostic)
-import { getAuthAdapter } from '@/adapters/baas/factory';
-import { LoginUseCase } from '@/application/use-cases/login.use-case';
+import { getAuthAdapter } from "@/adapters/baas/factory";
+import { LoginUseCase } from "@/application/use-cases/login.use-case";
 
 const authAdapter = getAuthAdapter();
 const loginUseCase = new LoginUseCase(authAdapter);
 await loginUseCase.execute({ email, password });
 
 // ❌ WRONG: Direct Firebase import (couples to provider)
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { signInWithEmailAndPassword } from "firebase/auth";
 ```
 
 ### Working with Database
 
 ```typescript
 // ✅ CORRECT: Use adapter via factory
-import { getDatabaseAdapter } from '@/adapters/baas/factory';
+import { getDatabaseAdapter } from "@/adapters/baas/factory";
 
 const db = getDatabaseAdapter<Post>();
-const posts = await db.findMany('posts', [
-  { field: 'authorId', operator: '==', value: userId }
+const posts = await db.findMany("posts", [
+  { field: "authorId", operator: "==", value: userId },
 ]);
 
 // ❌ WRONG: Direct Firestore import
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs } from "firebase/firestore";
 ```
 
 ### Creating Custom Hooks
 
 ```typescript
 // Custom hook using the adapter pattern
-import { getAuthAdapter } from '@/adapters/baas/factory';
+import { getAuthAdapter } from "@/adapters/baas/factory";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
-  
+
   useEffect(() => {
     const authAdapter = getAuthAdapter();
     return authAdapter.onAuthStateChanged(setUser);
   }, []);
-  
+
   return { user };
 }
 ```
@@ -300,7 +312,7 @@ All BAAS services are accessed through port interfaces, making them provider-agn
 ### Authentication
 
 ```typescript
-import { getAuthAdapter } from '@/adapters/baas/factory';
+import { getAuthAdapter } from "@/adapters/baas/factory";
 
 const auth = getAuthAdapter();
 
@@ -314,62 +326,62 @@ const newUser = await auth.signUp({ email, password });
 await auth.signOut();
 
 // Listen to auth state
-const unsubscribe = auth.onAuthStateChanged((user) => {
-  console.log('User:', user);
+const unsubscribe = auth.onAuthStateChanged(user => {
+  console.log("User:", user);
 });
 ```
 
 ### Database (Firestore/DynamoDB/PostgreSQL)
 
 ```typescript
-import { getDatabaseAdapter } from '@/adapters/baas/factory';
+import { getDatabaseAdapter } from "@/adapters/baas/factory";
 
 const db = getDatabaseAdapter<YourType>();
 
 // Create document
-const id = await db.create('collection', { name: 'Item' });
+const id = await db.create("collection", { name: "Item" });
 
 // Find by ID
-const item = await db.findById('collection', id);
+const item = await db.findById("collection", id);
 
 // Query documents
-const items = await db.findMany('collection', [
-  { field: 'status', operator: '==', value: 'active' }
+const items = await db.findMany("collection", [
+  { field: "status", operator: "==", value: "active" },
 ]);
 
 // Update
-await db.update('collection', id, { name: 'Updated' });
+await db.update("collection", id, { name: "Updated" });
 
 // Delete
-await db.delete('collection', id);
+await db.delete("collection", id);
 
 // Real-time subscription
-const unsubscribe = db.subscribe('collection', undefined, (data) => {
-  console.log('Data updated:', data);
+const unsubscribe = db.subscribe("collection", undefined, data => {
+  console.log("Data updated:", data);
 });
 ```
 
 ### Storage
 
 ```typescript
-import { getStorageAdapter } from '@/adapters/baas/factory';
+import { getStorageAdapter } from "@/adapters/baas/factory";
 
 const storage = getStorageAdapter();
 
 // Upload file
-const url = await storage.upload('path/to/file.jpg', file);
+const url = await storage.upload("path/to/file.jpg", file);
 
 // Get download URL
-const downloadUrl = await storage.getDownloadURL('path/to/file.jpg');
+const downloadUrl = await storage.getDownloadURL("path/to/file.jpg");
 
 // Delete file
-await storage.delete('path/to/file.jpg');
+await storage.delete("path/to/file.jpg");
 ```
 
 ### Messaging (Push Notifications)
 
 ```typescript
-import { getMessagingAdapter } from '@/adapters/baas/factory';
+import { getMessagingAdapter } from "@/adapters/baas/factory";
 
 const messaging = getMessagingAdapter();
 
@@ -377,8 +389,8 @@ const messaging = getMessagingAdapter();
 const token = await messaging.requestPermission();
 
 // Listen for messages
-const unsubscribe = messaging.onMessage((payload) => {
-  console.log('Message received:', payload);
+const unsubscribe = messaging.onMessage(payload => {
+  console.log("Message received:", payload);
 });
 ```
 
@@ -387,6 +399,7 @@ const unsubscribe = messaging.onMessage((payload) => {
 To switch from Firebase to another provider (e.g., AWS Amplify):
 
 1. **Set environment variable:**
+
 ```bash
 NEXT_PUBLIC_BAAS_PROVIDER=aws
 ```
@@ -434,6 +447,7 @@ Use agents in Claude Code by typing `/` to see available agents.
 ## Environment Variables
 
 ### Development (.env.development)
+
 ```env
 PHASE=development
 NEXT_PUBLIC_FIREBASE_API_KEY=...
@@ -447,29 +461,34 @@ NEXT_FIREBASE_MESSAGING_VAPID=...
 ```
 
 ### Production (.env.production)
+
 Same variables but with production values.
 
 ## Best Practices
 
 ### Security
+
 - Never commit `.env.development` or `.env.production` files
 - Review and test Firestore security rules thoroughly
 - Use environment variables for sensitive data
 - Enable Firebase App Check for production
 
 ### Code Quality
+
 - Run `npm run lint` before committing
 - Run `npm run format` to maintain consistent style
 - Write tests for critical functionality
 - Use TypeScript strictly
 
 ### Firebase
+
 - Test with Firebase emulators during development
 - Use separate dev/prod environments
 - Monitor Firebase usage and costs
 - Set up Firebase budget alerts
 
 ### Deployment
+
 - Test thoroughly in development before deploying to production
 - Review security rules before deploying
 - Monitor deployments for errors
@@ -505,16 +524,19 @@ Edit `src/app/globals.css` to customize Tailwind CSS variables and add custom st
 ## Troubleshooting
 
 ### Build Errors
+
 - Ensure all environment variables are set
 - Check TypeScript errors with `npx tsc --noEmit`
 - Clear Next.js cache: `rm -rf .next`
 
 ### Firebase Errors
+
 - Verify Firebase credentials in `.env` files
 - Check Firebase project IDs in `.firebaserc`
 - Ensure Firebase CLI is logged in: `firebase login`
 
 ### Deployment Issues
+
 - Check Firebase hosting configuration in `firebase.json`
 - Verify build completes successfully: `npm run build`
 - Check Firebase console for deployment logs
@@ -526,4 +548,5 @@ This is a template repository. Fork it and customize it for your needs!
 ## License
 
 MIT License - feel free to use this template for any project.
+
 # side-project-template

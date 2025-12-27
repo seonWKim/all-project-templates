@@ -1,6 +1,6 @@
 /**
  * Domain Model: User
- * 
+ *
  * Pure business entity representing a user in the system.
  * No dependencies on any BAAS provider or framework.
  */

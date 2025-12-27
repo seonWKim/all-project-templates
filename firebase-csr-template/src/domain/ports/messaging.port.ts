@@ -1,6 +1,6 @@
 /**
  * Port Interface: Messaging
- * 
+ *
  * Defines the contract for push notification and messaging services.
  */
 

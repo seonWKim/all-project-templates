@@ -1,6 +1,6 @@
 /**
  * Firebase Authentication Adapter
- * 
+ *
  * Implements AuthPort interface using Firebase Authentication SDK.
  */
 
@@ -13,20 +13,22 @@ import {
   updateProfile as firebaseUpdateProfile,
   deleteUser,
   User as FirebaseUser,
-} from 'firebase/auth';
-import { AuthPort } from '@/domain/ports';
-import { User, UserCredentials } from '@/domain/models/user.model';
-import { auth } from '@/lib/firebase';
+} from "firebase/auth";
+import { AuthPort } from "@/domain/ports";
+import { User, UserCredentials } from "@/domain/models/user.model";
+import { auth } from "@/lib/firebase";
 
 /**
  * Maps Firebase User to Domain User model
  */
-function mapFirebaseUserToDomain(firebaseUser: FirebaseUser | null): User | null {
+function mapFirebaseUserToDomain(
+  firebaseUser: FirebaseUser | null
+): User | null {
   if (!firebaseUser) return null;
 
   return {
     id: firebaseUser.uid,
-    email: firebaseUser.email || '',
+    email: firebaseUser.email || "",
     displayName: firebaseUser.displayName || undefined,
     photoURL: firebaseUser.photoURL || undefined,
     emailVerified: firebaseUser.emailVerified,
@@ -47,7 +49,7 @@ export class FirebaseAuthAdapter implements AuthPort {
       credentials.password
     );
     const user = mapFirebaseUserToDomain(userCredential.user);
-    if (!user) throw new Error('Failed to sign in');
+    if (!user) throw new Error("Failed to sign in");
     return user;
   }
 
@@ -58,7 +60,7 @@ export class FirebaseAuthAdapter implements AuthPort {
       credentials.password
     );
     const user = mapFirebaseUserToDomain(userCredential.user);
-    if (!user) throw new Error('Failed to sign up');
+    if (!user) throw new Error("Failed to sign up");
     return user;
   }
 
@@ -71,7 +73,7 @@ export class FirebaseAuthAdapter implements AuthPort {
   }
 
   onAuthStateChanged(callback: (user: User | null) => void): () => void {
-    return firebaseOnAuthStateChanged(auth, (firebaseUser) => {
+    return firebaseOnAuthStateChanged(auth, firebaseUser => {
       const user = mapFirebaseUserToDomain(firebaseUser);
       callback(user);
     });
@@ -87,7 +89,7 @@ export class FirebaseAuthAdapter implements AuthPort {
   ): Promise<void> {
     const user = auth.currentUser;
     if (!user || user.uid !== userId) {
-      throw new Error('User not authenticated');
+      throw new Error("User not authenticated");
     }
     await firebaseUpdateProfile(user, profile);
   }
@@ -95,7 +97,7 @@ export class FirebaseAuthAdapter implements AuthPort {
   async deleteAccount(userId: string): Promise<void> {
     const user = auth.currentUser;
     if (!user || user.uid !== userId) {
-      throw new Error('User not authenticated');
+      throw new Error("User not authenticated");
     }
     await deleteUser(user);
   }
