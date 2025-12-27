@@ -1,16 +1,14 @@
 /**
- * Common type definitions for SSR app
+ * Global type definitions and re-exports
  */
 
-export interface User {
-  id: string;
-  email: string;
-  displayName?: string;
-  photoURL?: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+// Re-export domain models
+export type * from "@/domain/models/user.model";
 
+// Re-export port types for convenience
+export type { Query } from "@/domain/ports";
+
+// Application-specific types
 export interface Post {
   id: string;
   title: string;

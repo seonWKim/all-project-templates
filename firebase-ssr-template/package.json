@@ -16,6 +16,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
+    "test:architecture": "jest __tests__/architecture",
     "check": "npm-run-all --parallel lint format:check type-check test",
     "clean": "rm -rf .next node_modules/.cache",
     "reset": "npm run clean && npm install",

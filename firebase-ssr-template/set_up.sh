@@ -1,4 +1,18 @@
 #!/bin/bash
+#
+# Firebase SSR Template Setup Script
+#
+# This template uses Hexagonal Architecture with context-aware adapters for SSR.
+# Directory structure:
+#   - src/domain/        Pure business logic (models, ports)
+#   - src/application/   Use cases
+#   - src/adapters/      Dual adapters (client/server) with context-aware factory
+#   - src/components/    UI components (client components with "use client")
+#   - src/hooks/         Client-side hooks
+#   - src/lib/           Utilities and server utilities
+#
+# See ARCHITECTURE.md for details.
+#
 
 # Colors for output
 RED='\033[0;31m'
