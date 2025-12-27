@@ -35,16 +35,27 @@ all-project-templates/
 ├── firebase-csr-template/      # Client-side rendering template
 │   ├── src/                   # Source code
 │   │   ├── app/              # Next.js App Router pages (all client components)
-│   │   ├── components/       # React components
 │   │   ├── hooks/            # Custom React hooks
 │   │   ├── lib/              # Utilities and Firebase initialization
 │   │   └── types/            # TypeScript type definitions
 │   ├── functions/            # Firebase Cloud Functions
+│   ├── scripts/              # Utility scripts
 │   ├── public/               # Static assets
+│   ├── .github/              # GitHub templates (issue/PR templates)
+│   ├── ARCHITECTURE.md       # Architecture documentation
+│   ├── CONTRIBUTING.md       # Contributing guidelines
+│   ├── QUICKSTART_CHECKLIST.md # Quick setup checklist
 │   ├── firestore.rules       # Firestore security rules
 │   └── firebase.json         # Firebase configuration
 ├── firebase-ssr-template/      # Server-side rendering template
-│   └── [similar structure]
+│   ├── src/                   # Source code
+│   │   ├── app/              # Next.js App Router pages
+│   │   ├── components/       # React components (SSR has this, CSR doesn't)
+│   │   ├── hooks/            # Custom React hooks
+│   │   ├── lib/              # Utilities and Firebase initialization
+│   │   └── types/            # TypeScript type definitions
+│   ├── functions/            # Firebase Cloud Functions
+│   └── [similar config files]
 └── claude-setup/               # Claude Code configuration files
 ```
 
@@ -55,7 +66,7 @@ all-project-templates/
 - Prefer interfaces over types for object shapes
 - Use explicit return types for functions
 - Avoid `any` type - use `unknown` if type is truly unknown
-- Use path aliases (e.g., `@/components`, `@/lib`)
+- Use path aliases (e.g., `@/app`, `@/lib`, `@/hooks`, `@/types`)
 
 ### React & Next.js
 - **CSR Template**: All components must include `"use client"` directive (no server components)
@@ -248,11 +259,12 @@ Use these agents in Claude Code by typing `/` and selecting the appropriate agen
 ## Common Tasks
 
 ### Adding a New Component
-1. Create component file in `src/components/`
-2. Add `"use client"` directive if in CSR template or if component uses hooks/interactivity
-3. Export component as default or named export
-4. Write tests in `__tests__` directory
-5. Update component documentation
+1. **CSR Template**: Create component files directly in `src/app/` (no separate components directory)
+2. **SSR Template**: Create component file in `src/components/`
+3. Add `"use client"` directive if in CSR template (always) or SSR template (when using hooks/interactivity)
+4. Export component as default or named export
+5. Write tests in `__tests__` directory
+6. Update component documentation
 
 ### Adding a New Page
 1. Create `page.tsx` in appropriate `src/app/` directory
@@ -332,6 +344,18 @@ These templates are intentionally minimal and unopinionated:
 - Node.js 20+ recommended
 - npm 10+ recommended
 - Firebase CLI 13+ required
+
+### Template-Specific Documentation
+**CSR Template** includes comprehensive documentation:
+- `ARCHITECTURE.md`: Detailed architecture overview and design decisions
+- `CONTRIBUTING.md`: Guidelines for contributing to the project
+- `QUICKSTART_CHECKLIST.md`: Step-by-step setup checklist
+- `README.md`: Complete project documentation
+
+**SSR Template** has minimal documentation:
+- `README.md`: Basic setup and usage instructions
+
+When working with the CSR template, consult these docs for architectural context.
 
 ### Useful Commands
 ```bash
