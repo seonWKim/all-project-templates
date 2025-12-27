@@ -3,7 +3,7 @@ const { compilerOptions } = require("./tsconfig.json");
 
 module.exports = {
   preset: "ts-jest",
-  testEnvironment: "jsdom", // Changed to jsdom for React component testing
+  testEnvironment: "jsdom",
   moduleNameMapper: {
     ...pathsToModuleNameMapper(compilerOptions.paths, {
       prefix: "<rootDir>/",
@@ -24,4 +24,14 @@ module.exports = {
     "!src/app/**", // Exclude Next.js app directory
   ],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  transform: {
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        tsconfig: {
+          jsx: "react",
+        },
+      },
+    ],
+  },
 };

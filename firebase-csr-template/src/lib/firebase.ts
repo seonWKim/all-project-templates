@@ -16,12 +16,19 @@ const firebaseConfig = {
   measurementId: env.firebase.measurementId,
 };
 
-// Initialize Firebase
+// Initialize Firebase with error handling
 let app: FirebaseApp;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig);
-} else {
-  app = getApps()[0];
+try {
+  if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+  } else {
+    app = getApps()[0];
+  }
+} catch (error) {
+  console.error("Failed to initialize Firebase:", error);
+  throw new Error(
+    "Firebase initialization failed. Please check your Firebase configuration."
+  );
 }
 
 // Initialize Firebase services
@@ -32,11 +39,15 @@ export const storage: FirebaseStorage = getStorage(app);
 // Initialize Firebase Cloud Messaging (only in browser)
 let messaging: Messaging | null = null;
 if (typeof window !== "undefined") {
-  isSupported().then(supported => {
-    if (supported) {
-      messaging = getMessaging(app);
-    }
-  });
+  isSupported()
+    .then((supported) => {
+      if (supported) {
+        messaging = getMessaging(app);
+      }
+    })
+    .catch((error) => {
+      console.warn("Firebase Messaging not supported:", error);
+    });
 }
 
 export { messaging };

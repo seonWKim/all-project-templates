@@ -16,13 +16,13 @@ const requiredEnvVars = [
 ] as const;
 
 // Optional environment variables (for type checking)
-const optionalEnvVars = [
+type OptionalEnvVarsList = readonly [
   "NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID",
   "NEXT_FIREBASE_MESSAGING_VAPID",
-] as const;
+];
 
 type RequiredEnvVar = (typeof requiredEnvVars)[number];
-type OptionalEnvVar = (typeof optionalEnvVars)[number];
+type OptionalEnvVar = OptionalEnvVarsList[number];
 type EnvVar = RequiredEnvVar | OptionalEnvVar;
 
 /**

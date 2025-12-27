@@ -26,7 +26,7 @@ export const onUserCreate = functions.firestore
 export const dailyTask = functions.pubsub
   .schedule("0 0 * * *")
   .timeZone("UTC")
-  .onRun(async context => {
+  .onRun(async () => {
     console.log("Running daily task");
 
     // Add your scheduled task logic here

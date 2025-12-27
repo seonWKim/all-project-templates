@@ -1,6 +1,8 @@
 "use client";
 
 import "./globals.css";
+import { ToastProvider } from "@/components/ui/toast";
+import { ErrorBoundary } from "@/components/ui/error-boundary";
 
 export default function RootLayout({
   children,
@@ -10,10 +12,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>my-awesome-project</title>
-        <meta name="description" content="A Next.js app powered by Firebase" />
+        <title>Firebase CSR Template</title>
+        <meta name="description" content="A modern Next.js app powered by Firebase with full authentication and database support" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
-      <body>{children}</body>
+      <body>
+        <ErrorBoundary>
+          <ToastProvider>
+            {children}
+          </ToastProvider>
+        </ErrorBoundary>
+      </body>
     </html>
   );
 }

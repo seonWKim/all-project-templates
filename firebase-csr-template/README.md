@@ -1,31 +1,71 @@
 # Firebase CSR Template (Hexagonal Architecture)
 
-A comprehensive Next.js + Firebase template for building modern client-side rendered (CSR) web applications with **hexagonal architecture** and **BAAS provider abstraction**. This template enables seamless switching between Firebase, AWS, Supabase, or any other Backend-as-a-Service provider.
+A comprehensive, production-ready Next.js + Firebase template for building modern client-side rendered (CSR) web applications with **hexagonal architecture** and **BAAS provider abstraction**. This template enables seamless switching between Firebase, AWS, Supabase, or any other Backend-as-a-Service provider.
 
-## Features
+## ✨ Features
 
-- **Hexagonal Architecture** (Ports and Adapters Pattern)
+### Core Stack
+
+- **Next.js 15** with App Router and Turbopack (Static Export / CSR only)
+- **React 19** with modern hooks and patterns
+- **TypeScript** for full type safety
+- **Tailwind CSS 4** for utility-first styling
+
+### Hexagonal Architecture
+
+- **Ports and Adapters Pattern**
   - Clean separation between business logic and external services
   - BAAS-agnostic design - switch providers without changing business logic
   - Testable, maintainable, and scalable architecture
-- **Next.js 15** with App Router and Turbopack (Static Export / CSR only)
-- **TypeScript** for type safety
-- **Tailwind CSS** for styling (no UI library dependencies - use any library you want)
 - **BAAS Abstraction Layer**
   - Currently supports Firebase (fully implemented)
   - Ready for AWS Amplify, Supabase, or custom backends
   - Port interfaces for Auth, Database, Storage, Messaging
-- **Testing Setup**
-  - Jest for unit tests
+
+### Firebase Integration
+
+- **Authentication** (client-side) with pre-built sign-in/sign-up forms
+- **Firestore Database** (client-side) with security rules
+- **Cloud Functions** (backend) with examples
+- **Storage** (client-side) for file uploads
+- **Cloud Messaging** (client-side) for push notifications
+- **Hosting** (static files) with automatic SSL
+
+### UI Components
+
+- **Reusable Components**: Button, Input, Card, Toast notifications
+- **Authentication Forms**: Sign-in and sign-up with validation
+- **Protected Routes**: Automatic route protection for authenticated pages
+- **Navigation**: Responsive navbar with user state
+- **Error Boundaries**: Graceful error handling
+- **Loading States**: Smooth loading indicators throughout
+
+### Developer Experience
+
+- **Jest Testing** with React Testing Library
   - Architectural tests to enforce design boundaries
   - Port interface validation
+  - Component tests with coverage
 - **ESLint & Prettier** for code quality
+- **Type-Safe Environment Variables** with validation
 - **Claude Code Agents** for AI-assisted development
 - **Dev/Prod Environments** out of the box
-- **Comprehensive Documentation**
-  - Architecture guidelines (ARCHITECTURE.md)
-  - AI assistant guidelines (CLAUDE.md)
-  - BAAS configuration guide (BAAS_CONFIGURATION.md)
+- **Hot Module Replacement** for fast development
+
+### Security
+
+- **No Vulnerabilities**: All dependencies audited and secured
+- **CodeQL Scanned**: Automated security analysis
+- **Enhanced Firestore Rules**: Comprehensive security examples
+- **Input Validation**: Client-side form validation
+- **Error Handling**: Proper error boundaries and user feedback
+
+### Comprehensive Documentation
+
+- **ARCHITECTURE.md** - Hexagonal architecture principles
+- **CLAUDE.md** - AI assistant guidelines with architectural decisions
+- **BAAS_CONFIGURATION.md** - Provider switching guide
+- **README.md** - This file with quick start and usage
 
 > **Note**: This template is configured for client-side rendering (CSR) only. All pages are static exports with no server-side rendering or API routes.
 
