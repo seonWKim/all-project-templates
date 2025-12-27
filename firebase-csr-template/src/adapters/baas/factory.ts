@@ -55,7 +55,7 @@ export function createAuthAdapter(config?: BaasConfig): AuthPort {
 /**
  * Create database adapter based on configuration
  */
-export function createDatabaseAdapter<T = any>(config?: BaasConfig): DatabasePort<T> {
+export function createDatabaseAdapter<T = Record<string, unknown>>(config?: BaasConfig): DatabasePort<T> {
   const baasConfig = config || getBaasConfig();
   
   switch (baasConfig.provider) {
@@ -110,7 +110,6 @@ export function createMessagingAdapter(config?: BaasConfig): MessagingPort {
  * Singleton instances for adapters
  */
 let authAdapterInstance: AuthPort | null = null;
-let databaseAdapterInstance: DatabasePort | null = null;
 let storageAdapterInstance: StoragePort | null = null;
 let messagingAdapterInstance: MessagingPort | null = null;
 
@@ -125,13 +124,10 @@ export function getAuthAdapter(): AuthPort {
 }
 
 /**
- * Get singleton database adapter instance
+ * Get database adapter instance (not singleton to support multiple types)
  */
-export function getDatabaseAdapter<T = any>(): DatabasePort<T> {
-  if (!databaseAdapterInstance) {
-    databaseAdapterInstance = createDatabaseAdapter<T>();
-  }
-  return databaseAdapterInstance as DatabasePort<T>;
+export function getDatabaseAdapter<T = Record<string, unknown>>(): DatabasePort<T> {
+  return createDatabaseAdapter<T>();
 }
 
 /**

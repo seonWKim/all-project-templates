@@ -51,13 +51,13 @@ export class FirebaseMessagingAdapter implements MessagingPort {
     });
   }
 
-  async subscribeToTopic(token: string, topic: string): Promise<void> {
+  async subscribeToTopic(_token: string, _topic: string): Promise<void> {
     // This requires a backend call to Firebase Admin SDK
     // Implementation would call a cloud function
     throw new Error('subscribeToTopic requires backend implementation');
   }
 
-  async unsubscribeFromTopic(token: string, topic: string): Promise<void> {
+  async unsubscribeFromTopic(_token: string, _topic: string): Promise<void> {
     // This requires a backend call to Firebase Admin SDK
     // Implementation would call a cloud function
     throw new Error('unsubscribeFromTopic requires backend implementation');

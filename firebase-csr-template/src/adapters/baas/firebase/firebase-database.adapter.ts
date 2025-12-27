@@ -21,9 +21,9 @@ import {
 import { DatabasePort, Query } from '@/domain/ports';
 import { db } from '@/lib/firebase';
 
-export class FirebaseDatabaseAdapter<T = any> implements DatabasePort<T> {
+export class FirebaseDatabaseAdapter<T = Record<string, unknown>> implements DatabasePort<T> {
   async create(collectionName: string, data: Omit<T, 'id'>): Promise<string> {
-    const docRef = await addDoc(collection(db, collectionName), data);
+    const docRef = await addDoc(collection(db, collectionName), data as Record<string, unknown>);
     return docRef.id;
   }
 
@@ -65,7 +65,7 @@ export class FirebaseDatabaseAdapter<T = any> implements DatabasePort<T> {
 
   async update(collectionName: string, id: string, data: Partial<T>): Promise<void> {
     const docRef = doc(db, collectionName, id);
-    await updateDoc(docRef, data as any);
+    await updateDoc(docRef, data as Record<string, unknown>);
   }
 
   async delete(collectionName: string, id: string): Promise<void> {
@@ -107,7 +107,7 @@ export class FirebaseDatabaseAdapter<T = any> implements DatabasePort<T> {
       type: 'create' | 'update' | 'delete';
       collection: string;
       id?: string;
-      data?: any;
+      data?: Partial<T>;
     }>
   ): Promise<void> {
     const batch = writeBatch(db);
@@ -115,10 +115,10 @@ export class FirebaseDatabaseAdapter<T = any> implements DatabasePort<T> {
     operations.forEach((operation) => {
       if (operation.type === 'create') {
         const docRef = doc(collection(db, operation.collection));
-        batch.set(docRef, operation.data);
+        batch.set(docRef, operation.data as Record<string, unknown>);
       } else if (operation.type === 'update' && operation.id) {
         const docRef = doc(db, operation.collection, operation.id);
-        batch.update(docRef, operation.data);
+        batch.update(docRef, operation.data as Record<string, unknown>);
       } else if (operation.type === 'delete' && operation.id) {
         const docRef = doc(db, operation.collection, operation.id);
         batch.delete(docRef);

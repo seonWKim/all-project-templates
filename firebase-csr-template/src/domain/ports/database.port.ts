@@ -8,10 +8,10 @@
 export interface Query {
   field: string;
   operator: '==' | '!=' | '>' | '>=' | '<' | '<=' | 'in' | 'array-contains';
-  value: any;
+  value: unknown;
 }
 
-export interface DatabasePort<T = any> {
+export interface DatabasePort<T = Record<string, unknown>> {
   /**
    * Create a new document in a collection
    */
@@ -50,6 +50,6 @@ export interface DatabasePort<T = any> {
     type: 'create' | 'update' | 'delete'; 
     collection: string; 
     id?: string; 
-    data?: any 
+    data?: Partial<T>
   }>): Promise<void>;
 }
